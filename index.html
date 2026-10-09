@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>New Architect — L'art de bâtir le web</title>
+  <meta name="description" content="New Architect, agence web en Suisse romande : des sites sur-mesure, animés et performants, construits bloc par bloc.">
+  <meta name="theme-color" content="#fafafa">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700;800&display=swap">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- ============ Sprite : logo, icônes, filtres ============ -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="logo" viewBox="0 0 1053.33 115.38">
+      <g fill="currentColor" fill-rule="evenodd">
+        <path d="M0.17 57.13L0.55 56.71L2.3 58.13L18.19 73.13L18.8 74.13L18.88 113.13L17.55 113.95L1.55 113.96L0.55 113.88L0 113.13ZM77.4 0.13L92.55 0L93.55 0.21L94.07 1.13L94.04 112.13L93.55 112.95L1.55 28.3L0.04 26.13L0.03 2.13L0.55 1.08L75.55 69.87L76.08 68.13L76.75 1.13Z"/>
+        <path d="M141.5 38.13L146.55 37.54L154.55 37.81L162.55 39.78L169.55 42.8L175.55 47.14L179.55 51.49L182.79 56.13L185.79 63.13L186.84 67.13L187.8 74.13L187.61 81.13L186.55 82.51L132.55 82.54L131.55 82.56L130.81 83.13L132.04 87.13L133.28 89.13L136.55 92.53L141.55 95.44L146.55 96.82L152.55 97.36L160.55 96.24L165.55 94.15L170.55 90.57L171.55 91.02L181.76 102.13L182.17 103.13L176.55 108.4L173.55 110.27L165.55 113.58L156.55 115.21L148.55 115.37L140.55 114.45L131.55 111.55L125.55 108.51L118.55 102.77L115.41 99.13L112.41 94.13L110.33 89.13L109.29 85.13L108.48 79.13L108.54 73.13L110.21 64.13L113.31 57.13L118.32 50.13L120.55 47.86L125.55 44.08L131.55 40.92L137.55 38.91ZM145.69 54.13L151.55 54.08L155.55 55.03L159.55 57.07L162.55 59.58L164.55 62.31L166.1 65.13L167 69.13L166.55 69.52L164.55 69.56L131.55 69.57L130.55 69.21L130.4 68.13L131.19 65.13L133.45 61.13L135.55 58.72L139.55 56.06L142.55 54.82Z"/>
+        <path d="M192.84 39.13L193.55 38.54L194.55 38.5L211.55 38.49L213.05 39.13L230.55 88.87L231.84 87.13L248.52 40.13L249.55 38.62L266.55 38.49L267.86 39.13L281.27 78.13L284.53 87.13L285.55 88.63L288.81 81.13L297.44 56.13L303.82 39.13L304.55 38.54L321.55 38.5L322.89 39.13L295.86 114.13L294.55 114.56L276.55 114.55L274.99 114.13L258.98 70.13L258.55 69.1L257.55 69L240.62 114.13L239.55 114.59L220.55 114.56L219.55 114.1L196.41 50.13Z"/>
+        <path d="M423.41 2.13L424.55 1.29L425.78 3.13L459.33 71.13L458.55 71.54L440.55 71.53L439.01 71.13L424.55 43.71L423.55 44.38L421.17 49.13L389.99 113.13L388.55 113.97L369.55 113.96L368.38 113.13ZM450.46 94.13L451.55 93.13L470.55 93.37L471.79 95.13L480.23 113.13L479.55 113.95L460.55 113.74L458.35 110.13Z"/>
+        <path d="M531.49 38.13L536.55 37.53L537.55 37.58L538.22 38.13L538.48 56.13L538.18 57.13L537.55 57.61L529.55 57.66L525.55 58.59L522.55 59.86L518.55 63.01L516.19 66.13L515.22 68.13L514.29 71.13L513.64 76.13L513.48 114.13L512.55 114.57L492.55 114.5L491.97 113.13L492 39.13L493.55 38.5L511.55 38.53L512.48 39.13L512.62 46.13L512.97 47.13L513.55 47.36L517.55 43.54L521.55 41.02L527.55 38.9Z"/>
+        <path d="M580.86 38.13L585.55 37.55L593.55 37.73L599.55 38.86L605.55 40.89L609.55 42.86L614.55 46.64L618.66 51.13L621.47 56.13L621.51 57.13L620.36 58.13L605.55 65.85L599.55 59.38L595.55 56.96L591.55 55.81L584.55 55.83L580.55 56.92L575.55 59.81L572.42 63.13L570.18 67.13L568.95 71.13L568.5 75.13L569.24 83.13L570.3 86.13L572.55 89.92L574.55 92.21L578.66 95.13L581.55 96.33L587.55 97.3L594.55 96.36L599.55 93.77L602.31 91.13L604.55 88.15L605.55 87.57L608.55 88.85L621.56 96.13L621.09 98.13L618.56 102.13L613.55 107.29L610.55 109.5L606.55 111.57L598.55 114.4L591.55 115.35L583.55 115.21L574.55 113.53L566.55 110.31L563.55 108.53L557.91 104.13L553.55 99.13L549.53 92.13L547.19 85.13L546.34 78.13L546.4 73.13L547.15 68.13L549.36 61.13L553.25 54.13L557.55 49.07L564.55 43.75L570.55 40.85L576.55 38.92Z"/>
+        <path d="M635.3 10.13L655.55 9.9L656.55 10.7L656.65 44.13L656.83 45.13L657.55 45.64L662.55 41.96L670.55 38.76L675.55 37.74L682.55 37.55L689.55 38.63L695.55 40.78L700.55 43.83L705.7 49.13L709.02 55.13L710.02 58.13L710.79 61.13L711.63 68.13L711.66 113.13L711.22 114.13L709.55 114.56L691.55 114.56L690.08 114.13L689.77 113.13L689.76 73.13L689.02 67.13L686.76 62.13L683.55 58.87L678.55 56.92L675.55 56.6L670.55 56.85L664.55 59.05L660.19 63.13L657.71 68.13L656.69 74.13L656.52 114.13L655.55 114.58L635.55 114.54L635.06 114.13L634.92 11.13Z"/>
+        <path d="M739.48 4.13L743.55 3.88L748.55 5.03L753 8.13L754.9 11.13L755.71 14.13L755.74 17.13L754.55 21.09L752.5 24.13L747.55 27.31L741.55 28.17L736.74 27.13L732.55 24.68L729.31 20.13L728.63 16.13L729.2 12.13L730.29 10.13L731.81 8.13L734.55 5.81ZM731.53 39.13L732.55 38.51L733.55 38.51L751.55 38.51L753.17 39.13L753.21 113.13L752.55 114.48L732.55 114.57L731.71 114.13Z"/>
+        <path d="M776.24 22.13L777.55 21.56L796.55 21.55L797.55 21.96L797.86 23.13L797.82 39.13L798.29 40.13L815.55 40.34L816.75 41.13L816.81 56.13L816.2 57.13L815.55 57.51L798.55 57.55L797.94 58.13L797.84 60.13L797.84 88.13L798.45 92.13L800.55 95.59L804.55 97.79L807.55 98.08L810.55 97.78L815.55 95.73L816.22 96.13L821.72 110.13L820.55 111.48L816.55 113.45L808.55 115.2L802.55 115.38L794.55 114.38L791.55 113.43L787.55 111.49L783.55 108.65L780.55 105.1L778.36 101.13L776.55 95.13L776.15 91.13L775.94 58.13L774.55 57.5L765.55 57.48L764.36 56.13L764.41 41.13L765.55 40.35L774.55 40.33L775.55 40.05L776.09 39.13Z"/>
+        <path d="M861.74 38.13L866.55 37.55L874.55 37.79L882.55 39.71L889.55 42.68L895.55 46.87L898.73 50.13L901.81 54.13L905.75 62.13L906.93 66.13L907.87 72.13L907.85 81.13L906.55 82.51L851.55 82.52L850.95 83.13L852.3 87.13L854.36 90.13L856.55 92.39L861.55 95.36L866.55 96.79L872.55 97.39L880.55 96.29L885.55 94.3L890.55 90.78L891.55 90.86L901.97 102.13L902.35 103.13L899.55 106.04L895.55 109.2L886.55 113.36L882.55 114.42L876.55 115.24L868.55 115.36L860.55 114.41L851.55 111.49L845.55 108.37L840.55 104.54L838.16 102.13L833.19 95.13L830.26 88.13L829.27 84.13L828.72 79.13L828.76 73.13L829.38 68.13L832.08 60.13L835.36 54.13L840.55 48.03L847.55 42.93L854.55 39.89ZM866 54.13L871.55 54.04L875.55 54.95L879.55 56.89L882.55 59.39L884.81 62.13L886.64 66.13L887.11 69.13L885.55 69.56L851.55 69.58L850.7 69.13L851.45 65.13L853.09 62.13L855.55 58.89L860.55 55.71Z"/>
+        <path d="M951.33 38.13L956.55 37.55L964.55 37.76L969.55 38.72L976.55 41.11L981.55 43.82L986.55 48.06L989.85 52.13L992.09 56.13L992.08 57.13L990.91 58.13L976.55 65.79L975.55 65.64L972.9 62.13L969.55 58.87L965.55 56.76L961.55 55.75L954.55 55.91L949.55 57.62L945.78 60.13L942.2 64.13L940.23 68.13L939.3 72.13L939.1 77.13L939.33 81.13L940.37 85.13L941.23 87.13L944.09 91.13L946.55 93.48L949.55 95.35L954.55 96.89L958.55 97.39L965.55 96.22L970.55 93.47L975.55 87.7L976.55 87.62L992.1 96.13L991.74 98.13L989.8 101.13L986.48 105.13L982.55 108.44L975.55 112.23L968.55 114.52L961.55 115.37L956.55 115.38L948.55 114.45L941.55 112.24L935.55 109.43L928.55 104.24L924.09 99.13L920.41 93.13L918.09 86.13L917.02 78.13L917.07 73.13L918.02 67.13L920.24 60.13L924.55 53.16L929.55 47.8L936.55 42.9L944.55 39.69Z"/>
+        <path d="M1008.13 22.13L1009.55 21.57L1028.55 21.59L1029.58 22.13L1029.81 23.13L1029.79 39.13L1030.32 40.13L1047.55 40.36L1048.39 41.13L1048.48 55.13L1047.96 57.13L1046.55 57.51L1031.55 57.5L1030.55 57.56L1029.93 58.13L1029.76 88.13L1030 91.13L1031.1 94.13L1032.98 96.13L1035.55 97.57L1040.55 98.02L1043.55 97.49L1047.55 95.79L1047.95 96.13L1048.67 97.13L1053.33 110.13L1052.55 111.34L1048.55 113.37L1044.55 114.53L1037.55 115.38L1031.55 115.22L1026.55 114.45L1023.55 113.5L1019.55 111.58L1015.55 108.83L1012.35 105.13L1010.09 101.13L1009.06 98.13L1008.13 93.13L1007.85 58.13L1006.55 57.5L997.55 57.52L996.55 57.04L996.19 56.13L996.18 42.13L996.55 40.64L997.55 40.31L1006.55 40.33L1007.55 39.95L1008 39.13Z"/>
+      </g>
+    </symbol>
+    <symbol id="logo-n" viewBox="-4 -4 102 122">
+      <path fill="currentColor" d="M0.17 57.13L0.55 56.71L2.3 58.13L18.19 73.13L18.8 74.13L18.88 113.13L17.55 113.95L1.55 113.96L0.55 113.88L0 113.13ZM77.4 0.13L92.55 0L93.55 0.21L94.07 1.13L94.04 112.13L93.55 112.95L1.55 28.3L0.04 26.13L0.03 2.13L0.55 1.08L75.55 69.87L76.08 68.13L76.75 1.13Z"/>
+    </symbol>
+    <symbol id="logo-a" viewBox="364 -3 120 121">
+      <path fill="currentColor" d="M423.41 2.13L424.55 1.29L425.78 3.13L459.33 71.13L458.55 71.54L440.55 71.53L439.01 71.13L424.55 43.71L423.55 44.38L421.17 49.13L389.99 113.13L388.55 113.97L369.55 113.96L368.38 113.13ZM450.46 94.13L451.55 93.13L470.55 93.37L471.79 95.13L480.23 113.13L479.55 113.95L460.55 113.74L458.35 110.13Z"/>
+    </symbol>
+
+    <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M2.5 8h10.5M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 16 16"><path d="M8 13.5V3M3.8 7.2 8 3l4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 16 16"><rect x="4" y="3.5" width="2.4" height="9" rx=".6" fill="currentColor"/><rect x="9.6" y="3.5" width="2.4" height="9" rx=".6" fill="currentColor"/></symbol>
+    <symbol id="i-x" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 16 16"><path d="M4.5 6.5 8 10l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 16 16"><path d="M5.5 3.5 2.5 6.5l3 3M2.8 6.5h6.7a3.7 3.7 0 0 1 0 7.4H7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 16 16"><path d="m10.5 3.5 3 3-3 3M13.2 6.5H6.5a3.7 3.7 0 0 0 0 7.4H9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-frame" viewBox="0 0 16 16"><rect x="2.5" y="3" width="11" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5 6h2M5 6v2M11 10H9M11 10V8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-image" viewBox="0 0 16 16"><rect x="2" y="2.5" width="12" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="5.6" cy="6" r="1.2" fill="currentColor"/><path d="m2.5 12 3.7-3.6 2.6 2.4 1.9-1.6 3 2.8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 16 16"><path d="M10.6 5.2 5.9 9.9a1.3 1.3 0 0 0 1.9 1.9l5-5a2.7 2.7 0 0 0-3.8-3.8l-5 5a4 4 0 0 0 5.7 5.7l4.3-4.3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-text" viewBox="0 0 16 16"><path d="M3.5 4h9M8 4v8.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/><rect x="9" y="9" width="4.5" height="4.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 16 16"><rect x="2" y="3.5" width="12" height="9" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="m2.6 4.4 5.4 4.2 5.4-4.2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 16 16"><path d="m8 2.5 5.5 2.8L8 8.1 2.5 5.3 8 2.5ZM2.5 8.2 8 11l5.5-2.8M2.5 11 8 13.8l5.5-2.8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3.5v9M3.5 8h9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-share" viewBox="0 0 16 16"><path d="M8 10V2.8M5 5.6l3-3 3 3M3.5 9.5v3a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.6" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="m10.2 5.8-1.3 3.1-3.1 1.3 1.3-3.1 3.1-1.3Z" fill="currentColor"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 16 16"><path d="M8 13s-5-3-5-6.6A2.8 2.8 0 0 1 8 4.7a2.8 2.8 0 0 1 5 1.7C13 10 8 13 8 13Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 16 16"><path d="M2.5 4.5a1 1 0 0 1 1-1h2.8l1.4 1.5h4.8a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1v-7.5Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 16 16"><path d="m8 2.5 5 2.6v5.8L8 13.5l-5-2.6V5.1l5-2.6ZM3 5.1l5 2.6 5-2.6M8 7.7v5.8" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 16 16"><path d="m8 2.6 1.6 3.4 3.7.4-2.8 2.5.8 3.7L8 10.7l-3.3 1.9.8-3.7-2.8-2.5 3.7-.4L8 2.6Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-book" viewBox="0 0 16 16"><path d="M3 3.5h4a1 1 0 0 1 1 1v8.5a1.4 1.4 0 0 0-1.4-1.4H3V3.5ZM13 3.5H9a1 1 0 0 0-1 1v8.5a1.4 1.4 0 0 1 1.4-1.4H13V3.5Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-crop" viewBox="0 0 16 16"><path d="M4.5 2v9.5H14M2 4.5h9.5V14" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-wand" viewBox="0 0 16 16"><path d="m3 13 7-7M9 3.5l.5-1.5.5 1.5 1.5.5-1.5.5-.5 1.5-.5-1.5L7.5 4 9 3.5ZM12.5 7l.3-.8.3.8.8.3-.8.3-.3.8-.3-.8-.8-.3.8-.3Z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 16 16"><path d="M1.8 8S4 3.8 8 3.8 14.2 8 14.2 8 12 12.2 8 12.2 1.8 8 1.8 8Z" fill="none" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="1.8" fill="none" stroke="currentColor" stroke-width="1.2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16"><path d="m3.5 8.4 2.9 2.9 6.1-6.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-user" viewBox="0 0 16 16"><circle cx="8" cy="5.4" r="2.7" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M2.8 13.6c.6-2.6 2.7-4 5.2-4s4.6 1.4 5.2 4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
+    <symbol id="i-brief" viewBox="0 0 16 16"><rect x="2.2" y="4.9" width="11.6" height="8.4" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5.9 4.9V3.8a1 1 0 0 1 1-1h2.2a1 1 0 0 1 1 1v1.1M2.4 8.6h11.2" fill="none" stroke="currentColor" stroke-width="1.3"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 16 16"><path d="M5.2 2.6 6.9 4.5c.35.4.33 1-.04 1.37l-.9.9a8.4 8.4 0 0 0 3.3 3.3l.9-.9c.37-.37.97-.39 1.37-.04l1.9 1.7c.42.37.44 1.01.05 1.41l-.8.8c-.6.6-1.5.82-2.3.52A12 12 0 0 1 2.6 6.6c-.3-.8-.08-1.7.52-2.3l.8-.8c.4-.39 1.04-.37 1.41.05Z" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/></symbol>
+    <symbol id="i-rocket" viewBox="0 0 16 16"><path d="M13.6 2.4s-3.5-.3-6.1 2.3L5.6 6.6l-2.3-.2-1.4 1.4 2.9 1 2.4 2.4 1 2.9 1.4-1.4-.2-2.3 1.9-1.9c2.6-2.6 2.3-6.1 2.3-6.1Z" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><circle cx="10.2" cy="5.8" r="1.1" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M4 10.7c-1 .4-1.6 1.8-1.7 3.1 1.3-.1 2.7-.7 3.1-1.7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 16 16"><path d="M3 2v11.2l3-2.6 2 4.1 1.9-.9-2-4.1h4L3 2Z" fill="currentColor" stroke="#fff" stroke-width=".9" stroke-linejoin="round"/></symbol>
+
+    <!-- Lettres « gonflées » : relief par éclairage SVG -->
+    <filter id="f-inflate-dark" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="2.6" result="fat"/>
+      <feGaussianBlur in="fat" stdDeviation="3.6" result="height"/>
+      <feDiffuseLighting in="height" surfaceScale="3.2" diffuseConstant="1" lighting-color="#ffffff" result="diff"><feDistantLight azimuth="225" elevation="62"/></feDiffuseLighting>
+      <feComponentTransfer in="diff" result="soft"><feFuncR type="linear" slope=".6" intercept=".42"/><feFuncG type="linear" slope=".6" intercept=".42"/><feFuncB type="linear" slope=".6" intercept=".42"/></feComponentTransfer>
+      <feSpecularLighting in="height" surfaceScale="3.2" specularConstant="1" specularExponent="16" lighting-color="#ffffff" result="spec"><feDistantLight azimuth="225" elevation="46"/></feSpecularLighting>
+      <feFlood flood-color="#1c1c1e" result="col"/>
+      <feBlend in="col" in2="soft" mode="multiply" result="shade"/>
+      <feComposite in="shade" in2="fat" operator="in" result="body"/>
+      <feComposite in="spec" in2="fat" operator="in" result="gloss"/>
+      <feComposite in="gloss" in2="body" operator="arithmetic" k1="0" k2=".85" k3="1" k4="0"/>
+    </filter>
+    <filter id="f-inflate-violet" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="2" result="fat"/>
+      <feGaussianBlur in="fat" stdDeviation="2.6" result="height"/>
+      <feDiffuseLighting in="height" surfaceScale="2.6" diffuseConstant="1" lighting-color="#ffffff" result="diff"><feDistantLight azimuth="225" elevation="62"/></feDiffuseLighting>
+      <feComponentTransfer in="diff" result="soft"><feFuncR type="linear" slope=".55" intercept=".5"/><feFuncG type="linear" slope=".55" intercept=".5"/><feFuncB type="linear" slope=".55" intercept=".5"/></feComponentTransfer>
+      <feSpecularLighting in="height" surfaceScale="2.6" specularConstant=".95" specularExponent="14" lighting-color="#ffffff" result="spec"><feDistantLight azimuth="225" elevation="46"/></feSpecularLighting>
+      <feFlood flood-color="#a07dff" result="col"/>
+      <feBlend in="col" in2="soft" mode="multiply" result="shade"/>
+      <feComposite in="shade" in2="fat" operator="in" result="body"/>
+      <feComposite in="spec" in2="fat" operator="in" result="gloss"/>
+      <feComposite in="gloss" in2="body" operator="arithmetic" k1="0" k2=".8" k3="1" k4="0"/>
+    </filter>
+    <filter id="f-inflate-orange" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="3" result="fat"/>
+      <feGaussianBlur in="fat" stdDeviation="4.6" result="height"/>
+      <feDiffuseLighting in="height" surfaceScale="4.5" diffuseConstant="1" lighting-color="#ffffff" result="diff"><feDistantLight azimuth="225" elevation="60"/></feDiffuseLighting>
+      <feComponentTransfer in="diff" result="soft"><feFuncR type="linear" slope=".6" intercept=".45"/><feFuncG type="linear" slope=".6" intercept=".45"/><feFuncB type="linear" slope=".6" intercept=".45"/></feComponentTransfer>
+      <feSpecularLighting in="height" surfaceScale="4.5" specularConstant="1" specularExponent="18" lighting-color="#ffffff" result="spec"><feDistantLight azimuth="225" elevation="46"/></feSpecularLighting>
+      <feFlood flood-color="#ff5a1f" result="col"/>
+      <feBlend in="col" in2="soft" mode="multiply" result="shade"/>
+      <feComposite in="shade" in2="fat" operator="in" result="body"/>
+      <feComposite in="spec" in2="fat" operator="in" result="gloss"/>
+      <feComposite in="gloss" in2="body" operator="arithmetic" k1="0" k2=".85" k3="1" k4="0"/>
+    </filter>
+    <filter id="f-grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ============ Préchargement ============ -->
+<div class="loader" aria-hidden="true">
+  <svg class="loader__bp" viewBox="0 0 1053.33 115.38" aria-hidden="true"></svg>
+</div>
+
+<!-- ============ Curseur ============ -->
+<div class="cursor" aria-hidden="true"><span class="cursor__label">Ajouter un bloc</span></div>
+
+<!-- ============ En-tête ============ -->
+<header class="hdr">
+  <div class="hdr__left">
+    <div class="hdr__pill">
+      <a class="hdr__logo" href="#top" aria-label="New Architect, retour en haut">
+        <svg viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      </a>
+      <nav class="hdr__nav" aria-label="Navigation principale">
+        <a class="roll" href="#blocs"><span class="roll__in" data-text="Blocs">Blocs</span></a>
+        <a class="roll" href="#services"><span class="roll__in" data-text="Services">Services</span></a>
+        <a class="roll" href="#methode"><span class="roll__in" data-text="Méthode">Méthode</span></a>
+        <a class="roll" href="#modeles"><span class="roll__in" data-text="Modèles">Modèles</span></a>
+        <a class="roll" href="#tarifs"><span class="roll__in" data-text="Tarifs">Tarifs</span></a>
+      </nav>
+      <button class="hdr__toggle" type="button" aria-expanded="false" aria-controls="menu">
+        <span class="hdr__close">Fermer</span>
+        <span class="hdr__dots" aria-hidden="true"><i></i><i></i></span>
+        <span class="sr-only">Ouvrir le menu</span>
+      </button>
+    </div>
+
+    <div class="hdr__drop" id="menu">
+      <nav class="drop__list" aria-label="Menu">
+        <a class="drop__item" href="#blocs"><span class="drop__icon ic-blocs"></span><span class="drop__label">Blocs</span><span class="drop__hint">Parcourir nos blocs</span></a>
+        <a class="drop__item" href="#services"><span class="drop__icon ic-services"></span><span class="drop__label">Services</span><span class="drop__hint">Découvrir nos services</span></a>
+        <a class="drop__item" href="#methode"><span class="drop__icon ic-methode"></span><span class="drop__label">Méthode</span><span class="drop__hint">Trois façons de démarrer</span></a>
+        <a class="drop__item" href="#modeles"><span class="drop__icon ic-modeles"></span><span class="drop__label">Modèles</span><span class="drop__hint">Partir d'un modèle</span></a>
+        <a class="drop__item" href="#tarifs"><span class="drop__icon ic-tarifs"><b>CHF</b></span><span class="drop__label">Tarifs</span><span class="drop__hint">Demander un devis</span></a>
+      </nav>
+      <div class="drop__legal">
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hdr__right">
+    <a class="roll hdr__link" href="#tarifs"><span class="roll__in" data-text="Contact">Contact</span></a>
+    <a class="btn btn--dark btn--sm" href="#manifeste"><span>Démarrer un projet</span></a>
+  </div>
+</header>
+<div class="veil" aria-hidden="true"></div>
+
+<main class="page" id="top">
+
+  <!-- ============ 1. Hero : porte-clés 3D ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__bg"></div>
+    <canvas class="hero__gl" aria-label="Monogramme NA de New Architect en 3D noir brillant, qui suit la souris et fait un tour quand on clique dessus"></canvas>
+    <div class="hero__content">
+      <h1 class="hero__title" id="hero-title" data-hero-title>L'art de bâtir le&nbsp;web.</h1>
+      <p class="hero__sub" data-hero-sub>New Architect, l'agence web qui bâtit votre site bloc par bloc.</p>
+      <a class="btn btn--dark hero__cta" data-hero-cta href="#manifeste"><span>Démarrer un projet</span></a>
+    </div>
+  </section>
+
+  <!-- ============ 2. Bandeau des métiers ============ -->
+  <section class="ticker" aria-label="Métiers accompagnés">
+    <p class="ticker__label" data-split>Des sites sur-mesure pour tous les métiers de Suisse romande</p>
+    <div class="ticker__viewport" data-reveal-logos>
+      <div class="ticker__track">
+        <div class="ticker__set">
+          <span class="tk tk--resto"><svg viewBox="0 0 24 24"><path d="M6 2v8a2 2 0 0 0 2 2v10M10 2v8a2 2 0 0 1-2 2M8 2v6M17 22V2c-2.5 1.5-3.5 4-3.5 8v3H17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>RESTAURANTS</span>
+          <span class="tk tk--hotel">Hôtels &amp; maisons d'hôtes</span>
+          <span class="tk tk--vigne"><svg viewBox="0 0 24 24"><g fill="currentColor"><circle cx="9" cy="9" r="2.6"/><circle cx="15" cy="9" r="2.6"/><circle cx="12" cy="13.6" r="2.6"/><circle cx="6.4" cy="13.4" r="2.2"/><circle cx="17.6" cy="13.4" r="2.2"/><circle cx="9.4" cy="18" r="2.2"/><circle cx="14.6" cy="18" r="2.2"/></g><path d="M12 6.4V2.5l2.5-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>vignerons</span>
+          <span class="tk tk--artisan">ARTISANS</span>
+          <span class="tk tk--shop">Boutiques<sup>.</sup></span>
+          <span class="tk tk--cabinet">Cabinets</span>
+          <span class="tk tk--startup"><i></i>startups</span>
+          <span class="tk tk--archi">A R C H I T E C T E S</span>
+          <span class="tk tk--asso">Associations</span>
+          <span class="tk tk--indep">Indépendants</span>
+        </div>
+        <div class="ticker__set" aria-hidden="true">
+          <span class="tk tk--resto"><svg viewBox="0 0 24 24"><path d="M6 2v8a2 2 0 0 0 2 2v10M10 2v8a2 2 0 0 1-2 2M8 2v6M17 22V2c-2.5 1.5-3.5 4-3.5 8v3H17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>RESTAURANTS</span>
+          <span class="tk tk--hotel">Hôtels &amp; maisons d'hôtes</span>
+          <span class="tk tk--vigne"><svg viewBox="0 0 24 24"><g fill="currentColor"><circle cx="9" cy="9" r="2.6"/><circle cx="15" cy="9" r="2.6"/><circle cx="12" cy="13.6" r="2.6"/><circle cx="6.4" cy="13.4" r="2.2"/><circle cx="17.6" cy="13.4" r="2.2"/><circle cx="9.4" cy="18" r="2.2"/><circle cx="14.6" cy="18" r="2.2"/></g><path d="M12 6.4V2.5l2.5-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>vignerons</span>
+          <span class="tk tk--artisan">ARTISANS</span>
+          <span class="tk tk--shop">Boutiques<sup>.</sup></span>
+          <span class="tk tk--cabinet">Cabinets</span>
+          <span class="tk tk--startup"><i></i>startups</span>
+          <span class="tk tk--archi">A R C H I T E C T E S</span>
+          <span class="tk tk--asso">Associations</span>
+          <span class="tk tk--indep">Indépendants</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. Manifeste + timeline ============ -->
+  <section class="statement" id="manifeste" aria-label="Manifeste">
+    <div class="statement__top">
+      <h2 class="statement__text" data-statement>
+        New Architect <span class="st-slot" aria-hidden="true"></span> dessine et construit <span class="st-slot" aria-hidden="true"></span> des sites web où chaque idée <span class="st-slot" aria-hidden="true"></span> devient un bloc <span class="st-slot" aria-hidden="true"></span> sur-mesure, assemblé <span class="st-slot" aria-hidden="true"></span> avec soin.
+      </h2>
+    </div>
+
+    <div class="statement__bottom">
+      <div class="tl">
+        <div class="tl__head">
+          <span class="tl__btn" aria-hidden="true"><svg><use href="#i-pause"/></svg></span>
+          <span class="tl__time"><b>Page 02</b> / 05</span>
+          <span class="tl__sep"></span>
+          <span class="tl__dur">Grille <i>12</i> col</span>
+          <span class="tl__right"><span class="tl__chip is-on">Desktop</span><span class="tl__chip">Mobile</span></span>
+        </div>
+        <div class="tl__ruler" aria-hidden="true">
+          <span class="tl__range"><i></i><i></i></span>
+          <span class="tl__ticks"></span>
+          <span class="tl__lbl" style="--x:0">0</span>
+          <span class="tl__lbl" style="--x:1">240</span>
+          <span class="tl__lbl" style="--x:2">480</span>
+          <span class="tl__lbl" style="--x:3">720</span>
+          <span class="tl__lbl" style="--x:4">960</span>
+          <span class="tl__lbl" style="--x:5">1200</span>
+          <span class="tl__lbl" style="--x:6">1440</span>
+        </div>
+        <div class="tl__tracks">
+          <div class="tl__slot">
+            <div class="tile tile--pillow" data-tile>
+              <div class="pillow"><svg class="pillow__a" viewBox="0 0 120 121"><use href="#logo-a"/></svg></div>
+            </div>
+          </div>
+          <div class="tl__slot">
+            <div class="tile tile--kinetic" data-tile>
+              <span class="kin"><b>w</b><b>e</b><b>b</b></span>
+            </div>
+          </div>
+          <div class="tl__slot">
+            <div class="tile tile--halftone" data-tile>
+              <canvas class="halftone" width="240" height="240" data-halftone></canvas>
+            </div>
+          </div>
+          <div class="tl__slot">
+            <div class="tile tile--stripes" data-tile>
+              <div class="stripes">
+                <span style="--i:7">BLOCS</span><span style="--i:6">BLOCS</span><span style="--i:5">BLOCS</span><span style="--i:4">BLOCS</span><span style="--i:3">BLOCS</span><span style="--i:2">BLOCS</span><span style="--i:1">BLOCS</span><span class="stripes__top">BLOCS</span>
+              </div>
+            </div>
+          </div>
+          <div class="tl__slot">
+            <div class="tile tile--pattern" data-tile>
+              <div class="pattern">
+                <div class="pattern__row"><span>NEW ARCHITECT. NEW ARCHITECT. </span><span>NEW ARCHITECT. NEW ARCHITECT. </span></div>
+                <div class="pattern__row"><span>NEW ARCHITECT. NEW ARCHITECT. </span><span>NEW ARCHITECT. NEW ARCHITECT. </span></div>
+                <div class="pattern__row"><span>NEW ARCHITECT. NEW ARCHITECT. </span><span>NEW ARCHITECT. NEW ARCHITECT. </span></div>
+                <div class="pattern__row"><span>NEW ARCHITECT. NEW ARCHITECT. </span><span>NEW ARCHITECT. NEW ARCHITECT. </span></div>
+                <div class="pattern__row"><span>NEW ARCHITECT. NEW ARCHITECT. </span><span>NEW ARCHITECT. NEW ARCHITECT. </span></div>
+                <div class="pattern__row"><span>NEW ARCHITECT. NEW ARCHITECT. </span><span>NEW ARCHITECT. NEW ARCHITECT. </span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. Un bloc pour chaque idée ============ -->
+  <section class="story story--one" id="blocs">
+    <div class="wrap story__grid">
+      <div class="story__text">
+        <p class="label" data-split>Un bloc pour chaque idée</p>
+        <div class="fx" data-fx data-cursor="Ajouter un bloc">
+          <h2 class="h2 fx__title" data-split>Parcourez nos <span class="nw" data-keep><span class="fx__word"><span class="fx__glow" aria-hidden="true"></span><span class="fx__inflate" aria-hidden="true"><b style="--i:0">b</b><b style="--i:1">l</b><b style="--i:2">o</b><b style="--i:3">c</b><b style="--i:4">s</b></span><span class="fx__plain">blocs</span></span>&nbsp;:</span> animations, typographie cinétique, 3D, effets de lumière et plus encore.</h2>
+          <p class="h2 fx__title fx__halftone" aria-hidden="true">Parcourez nos <span class="nw">blocs&nbsp;:</span> animations, typographie cinétique, 3D, effets de lumière et plus encore.</p>
+        </div>
+      </div>
+
+      <div class="lib" data-reveal>
+        <div class="lib__bar">
+          <span class="lib__tab">Bibliothèque | Blocs texte</span>
+          <span class="lib__close" aria-hidden="true"><svg><use href="#i-x"/></svg></span>
+        </div>
+        <div class="lib__grid">
+          <button class="lib__cell" type="button" data-effect="inflate" data-cursor="Ajouter un bloc">
+            <span class="lib__tile mini mini--inflate"><span>BLO<br>CS</span></span>
+            <span class="lib__name">Gonflé</span>
+          </button>
+          <button class="lib__cell" type="button" data-effect="glow" data-cursor="Ajouter un bloc">
+            <span class="lib__tile mini mini--glow"><svg viewBox="0 0 102 122"><use href="#logo-n"/></svg></span>
+            <span class="lib__name">Lueur</span>
+          </button>
+          <button class="lib__cell" type="button" data-effect="focus" data-cursor="Ajouter un bloc">
+            <span class="lib__tile mini mini--focus"><span>NEW&nbsp;AR<br>CHITECT</span></span>
+            <span class="lib__name">Focus</span>
+          </button>
+          <button class="lib__cell" type="button" data-effect="halftone" data-cursor="Ajouter un bloc">
+            <span class="lib__tile mini mini--halftone"><svg viewBox="0 0 120 121"><use href="#logo-a"/></svg></span>
+            <span class="lib__name">Trame</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. Infiniment personnalisable ============ -->
+  <section class="story story--two">
+    <div class="wrap story__grid">
+      <div class="tweak" data-reveal>
+        <div class="tweak__stage">
+          <div class="tweak__tile">
+            <span class="tweak__fallback" aria-hidden="true">
+              <svg viewBox="0 0 102 122"><use href="#logo-n"/></svg>
+              <svg viewBox="0 0 120 121"><use href="#logo-a"/></svg>
+            </span>
+            <canvas class="tweak__gl" aria-label="Lettres N et A en chrome, en rotation"></canvas>
+          </div>
+        </div>
+        <aside class="tweak__panel" aria-label="Réglages du bloc">
+          <div class="tw__head"><span>Rotation 3D</span><span class="tw__icons"><svg><use href="#i-eye"/></svg><svg><use href="#i-layers"/></svg></span></div>
+          <div class="tw__thumb"><span class="tw__mini">N<br>A</span></div>
+          <div class="tw__duo">
+            <span class="tw__btn"><svg><use href="#i-crop"/></svg>Recadrer</span>
+            <span class="tw__btn"><svg><use href="#i-wand"/></svg>Détourer</span>
+          </div>
+          <div class="tw__slider" data-param="speed" data-value="78" role="slider" tabindex="0" aria-label="Vitesse de rotation" aria-valuemin="0" aria-valuemax="100" aria-valuenow="78">
+            <span class="tw__fill"></span><span class="tw__k">Rotation</span><span class="tw__v"><b>78</b>/100</span>
+          </div>
+          <div class="tw__slider" data-param="tilt" data-value="28" role="slider" tabindex="0" aria-label="Inclinaison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="28">
+            <span class="tw__fill"></span><span class="tw__k">Inclinaison</span><span class="tw__v"><b>28</b>/100</span>
+          </div>
+          <button class="tw__select" type="button" data-param="material">
+            <span class="tw__k">Matière</span><span class="tw__val">Argent brillant</span><svg><use href="#i-chev"/></svg>
+          </button>
+          <div class="tw__seg" data-param="finish">
+            <span class="tw__k">Reflet</span>
+            <div class="tw__segs">
+              <button type="button" class="is-on" data-v="mirror">Miroir</button>
+              <button type="button" data-v="satin">Satiné</button>
+              <button type="button" data-v="matte">Mat</button>
+            </div>
+          </div>
+          <div class="tw__field"><span class="tw__k">Durée</span><span>3&nbsp;s</span><svg><use href="#i-chev"/></svg></div>
+          <div class="tw__field tw__field--last"><span class="tw__k">Calque</span><span class="tw__icons"><svg><use href="#i-layers"/></svg><svg><use href="#i-grid"/></svg></span></div>
+        </aside>
+      </div>
+
+      <div class="story__text">
+        <p class="label" data-split>Infiniment personnalisable.</p>
+        <h2 class="h2" data-words>Adaptez chaque bloc grâce à des molettes <span class="ic-dial" data-keep aria-hidden="true"><i></i></span> intuitives, des curseurs <span class="nw" data-keep><span class="ic-slider" aria-hidden="true"><i></i><i></i><i></i><i></i></span>,</span> vos idées et même du code.</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. Kit de marque (épinglé, glisse au scroll) ============ -->
+  <section class="kit" id="kit" aria-label="Kit de marque">
+    <div class="kit__inner">
+      <div class="kit__text">
+        <p class="label" data-split>Votre nouvelle boîte à outils</p>
+        <h2 class="h2" data-split>Votre identité et vos blocs favoris, réunis pour ne jamais repartir de zéro.</h2>
+      </div>
+
+      <div class="kit__app">
+        <div class="app">
+          <aside class="app__side">
+            <svg class="app__logo" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+            <p class="app__grp">Accueil</p>
+            <span class="app__item"><svg><use href="#i-compass"/></svg>Explorer</span>
+            <span class="app__item"><svg><use href="#i-heart"/></svg>Favoris</span>
+            <p class="app__grp">Espace de travail</p>
+            <span class="app__item"><svg><use href="#i-folder"/></svg>Mes fichiers</span>
+            <span class="app__item"><svg><use href="#i-box"/></svg>Projets</span>
+            <span class="app__item is-on"><svg><use href="#i-star"/></svg>Kit de marque</span>
+            <p class="app__grp">Communauté</p>
+            <span class="app__item"><svg><use href="#i-grid"/></svg>Modèles</span>
+            <span class="app__item"><svg><use href="#i-layers"/></svg>Blocs</span>
+            <span class="app__item"><svg><use href="#i-compass"/></svg>Mes studios <em>Nouveau</em></span>
+            <p class="app__grp">Aide</p>
+            <span class="app__item"><svg><use href="#i-book"/></svg>Apprendre</span>
+            <span class="app__item"><svg><use href="#i-mail"/></svg>Écrire au studio</span>
+            <div class="app__user"><span class="app__avatar">R</span><span><b>Studio Rive</b><small>Offre Pro</small></span></div>
+          </aside>
+          <div class="app__main">
+            <div class="app__top">
+              <span class="app__title">Kit de marque</span>
+              <span class="app__actions"><span class="app__ghost"><svg><use href="#i-share"/></svg>Partager</span><span class="app__cta"><svg><use href="#i-plus"/></svg>Créer</span></span>
+            </div>
+            <p class="app__h">Blocs de marque <span>Commencer avec un bloc</span></p>
+            <div class="app__blocks" data-kit-row>
+              <div class="app__block"><span><b>Illustrations</b><small>Studio Rive</small></span><i class="ab ab--wave"></i></div>
+              <div class="app__block"><span><b>Texte néon</b><small>Studio Rive</small></span><i class="ab ab--neon">Rive</i></div>
+              <div class="app__block"><span><b>Logo animé</b><small>Studio Rive</small></span><i class="ab ab--logo">Rive<em></em></i></div>
+              <div class="app__block"><span><b>Effet multiple</b><small>Studio Rive</small></span><i class="ab ab--multi"><em></em><em></em></i></div>
+              <div class="app__block"><span><b>Typographie</b><small>Studio Rive</small></span><i class="ab ab--type">Aa</i></div>
+            </div>
+            <p class="app__h">Modèles de marque <span>Commencer avec un modèle</span><em class="app__see">Voir tout</em></p>
+            <div class="app__tpls" data-kit-row>
+              <div class="app__tpl tpl--water"><img src="https://images.unsplash.com/photo-1509641498745-13c26fd1ed89?auto=format&amp;fit=crop&amp;w=480&amp;q=70" alt="" loading="lazy"><span class="tpl__logo">Rive<em></em></span></div>
+              <div class="app__tpl tpl--lines"><svg viewBox="0 0 200 300" preserveAspectRatio="none"><path d="M-10 40 C 40 10, 60 90, 110 60 S 180 20, 220 70 M-10 90 C 30 60, 80 140, 120 110 S 190 70, 220 120 M-10 140 C 50 110, 70 190, 130 160 S 190 120, 220 170 M-10 190 C 40 160, 90 240, 120 210 S 200 170, 220 220 M-10 240 C 30 210, 80 290, 130 260 S 190 220, 220 270" fill="none" stroke="#1b1b1b" stroke-width="1.2"/></svg><span class="tpl__pill">LAC DE NEUCHÂTEL (429&nbsp;M)</span></div>
+              <div class="app__tpl tpl--portrait"><img src="https://images.unsplash.com/photo-1714462396046-29272a3cb549?auto=format&amp;fit=crop&amp;w=480&amp;q=70" alt="" loading="lazy"><span class="tpl__logo">Rive<em></em></span></div>
+              <div class="app__tpl tpl--text"><span>Chaque vague<br>raconte<br>une histoire.</span></div>
+              <div class="app__tpl tpl--leaf"><img src="https://images.unsplash.com/photo-1580133318324-f2f76d987dd8?auto=format&amp;fit=crop&amp;w=480&amp;q=70" alt="" loading="lazy"><span class="tpl__logo">Rive<em></em></span></div>
+              <div class="app__tpl tpl--glyphs"><span>Aa Bb Cc<br>Ää Éé Çç<br>0123 &amp;?!<br>«&nbsp;Rive&nbsp;»</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. Services (4 cartes) ============ -->
+  <section class="feat" id="services">
+    <div class="wrap">
+      <div class="feat__head">
+        <div>
+          <p class="label" data-split>Nos services</p>
+          <h2 class="h3" data-split>Votre site web, de A à Z.</h2>
+        </div>
+        <a class="btn btn--light" href="#methode"><span>Notre méthode</span><svg><use href="#i-arrow"/></svg></a>
+      </div>
+
+      <div class="feat__grid">
+        <article class="fcard" data-reveal>
+          <div class="fcard__media fcard__media--dark" data-anim>
+            <div class="fv-import">
+              <span class="fv-import__thumb t1"><img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="" loading="lazy"></span>
+              <span class="fv-import__thumb t2"><img src="https://images.unsplash.com/photo-1628012209120-d9db7abf7eab?auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="" loading="lazy"></span>
+              <span class="fv-import__thumb t3"><img src="https://images.unsplash.com/photo-1568145675395-66a2eda0c6d7?auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="" loading="lazy"></span>
+              <span class="fv-import__thumb t4"><img src="https://images.unsplash.com/photo-1649810617979-16001a60c89c?auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="" loading="lazy"></span>
+              <span class="fv-import__thumb t5 fv-import__logo"><svg viewBox="0 0 120 121"><use href="#logo-a"/></svg></span>
+              <span class="fv-import__thumb t6"><img src="https://images.unsplash.com/photo-1650970594928-034a01eed606?auto=format&amp;fit=crop&amp;w=200&amp;q=60" alt="" loading="lazy"></span>
+              <span class="fv-import__thumb t7 fv-import__doc"><i></i><i></i><i></i></span>
+              <span class="fv-seg"><b class="is-on">Photos</b><b>Textes</b><b>Logos</b></span>
+            </div>
+          </div>
+          <h3 class="fcard__title">Rassembler</h3>
+          <p class="fcard__desc">Envoyez-nous textes, photos et logos, d'où vous voulez, en un instant.</p>
+        </article>
+
+        <article class="fcard" data-reveal>
+          <div class="fcard__media fcard__media--light" data-anim>
+            <div class="fv-edit">
+              <div class="fv-edit__head"><span class="fv-btn"><svg><use href="#i-pause"/></svg></span><span><b>Page 01</b> / 06</span><span class="fv-sep"></span><span>Grille <i>12</i> col</span></div>
+              <div class="fv-edit__ruler"></div>
+              <div class="fv-edit__row r1"><span class="fv-ico"><svg><use href="#i-text"/></svg></span><span class="fv-bar">Titre — Bienvenue</span></div>
+              <div class="fv-edit__row r2"><span class="fv-ico"><svg><use href="#i-grid"/></svg></span><span class="fv-bar">Galerie 3D</span></div>
+              <div class="fv-edit__row r3"><span class="fv-ico"><svg><use href="#i-mail"/></svg></span><span class="fv-bar">Formulaire de contact</span></div>
+              <div class="fv-edit__strip"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <h3 class="fcard__title">Concevoir</h3>
+          <p class="fcard__desc">Maquettes sur-mesure : typographies, couleurs et mise en page, validées avec vous.</p>
+        </article>
+
+        <article class="fcard" data-reveal>
+          <div class="fcard__media fcard__media--dark" data-anim>
+            <div class="fv-fx">
+              <div class="fv-fx__head"><span><b>Carrousel 3D</b><small>Jusqu'à 20 images</small></span><span class="fv-fx__icons"><svg><use href="#i-eye"/></svg><svg><use href="#i-layers"/></svg></span></div>
+              <div class="fv-fx__grid">
+                <span class="fv-fx__add"><svg><use href="#i-plus"/></svg></span>
+                <img src="https://images.unsplash.com/photo-1758930343232-04f088a342a8?auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1620140036708-455ed5c0426a?auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1747459707229-7b1b7c8367e0?auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1568145675395-66a2eda0c6d7?auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1667743537770-2b4691bfe7a3?auto=format&amp;fit=crop&amp;w=160&amp;q=60" alt="" loading="lazy">
+              </div>
+              <div class="fv-fx__duo"><span>Gérer</span><span>Détourer</span></div>
+              <div class="fv-fx__sl s1"><span class="fv-fx__fill"></span><span>Rotation</span><b>72/100</b><i class="fv-fx__hand">↔</i></div>
+              <div class="fv-fx__sl s2"><span class="fv-fx__fill"></span><span>Échelle</span><b>36/100</b></div>
+              <div class="fv-fx__sl s3"><span class="fv-fx__fill"></span><span>Inclinaison</span><b>72/100</b></div>
+            </div>
+          </div>
+          <h3 class="fcard__title">Animer</h3>
+          <p class="fcard__desc">Animations, effets et 3D : chaque page prend vie, au scroll comme au survol.</p>
+        </article>
+
+        <article class="fcard" data-reveal>
+          <div class="fcard__media fcard__media--light" data-anim>
+            <div class="fv-ship">
+              <div class="fv-ship__bar">
+                <span class="fv-ship__tools"><svg><use href="#i-undo"/></svg><svg><use href="#i-redo"/></svg><i></i><span><svg><use href="#i-frame"/></svg>16:9</span><span>Haute</span><span>100&nbsp;%</span><i></i></span>
+                <span class="fv-ship__share">Partager</span>
+                <span class="fv-ship__go">Publier</span>
+              </div>
+              <span class="fv-ship__cursor"><svg><use href="#i-cursor"/></svg></span>
+              <span class="fv-ship__toast"><svg><use href="#i-check"/></svg>Votre site est en ligne</span>
+            </div>
+          </div>
+          <h3 class="fcard__title">Lancer</h3>
+          <p class="fcard__desc">Mise en ligne, nom de domaine, référencement et suivi : on s'occupe de tout.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. Trois façons de démarrer ============ -->
+  <section class="ways" id="methode">
+    <div class="wrap ways__grid">
+      <div class="ways__media" data-reveal>
+        <!-- Modèle -->
+        <div class="wm wm--remix is-active" data-anim>
+          <div class="wm-win wm-win--a">
+            <div class="wm-win__top"><span class="wm-pill"><svg><use href="#i-share"/></svg>Importer</span><span class="wm-pill wm-pill--w"><svg><use href="#i-plus"/></svg>Créer</span></div>
+            <div class="wm-win__row">
+              <span class="wm-mini"><b>Accueil</b><i class="wm-ico wm-ico--a"></i></span>
+              <span class="wm-mini"><b>Menu</b><i class="wm-ico wm-ico--b"></i></span>
+              <span class="wm-mini"><b>Réserver</b><i class="wm-ico wm-ico--c"></i></span>
+            </div>
+            <div class="wm-win__grid">
+              <span class="wm-big wm-big--balls"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="wm-big wm-big--phone"><i></i></span>
+              <span class="wm-big wm-big--red"><b>LE<br>RIVAGE</b></span>
+              <span class="wm-big wm-big--blue"><svg viewBox="0 0 120 121"><use href="#logo-a"/></svg></span>
+            </div>
+          </div>
+          <div class="wm-win wm-win--b">
+            <aside class="wm-side"><svg viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i></aside>
+            <div class="wm-feed">
+              <p>Explorer <span>Les tendances de la semaine</span></p>
+              <div class="wm-feed__row">
+                <span class="wm-card wm-card--shop">
+                  <img src="https://images.unsplash.com/photo-1762605135012-56a59a059e60?auto=format&amp;fit=crop&amp;w=360&amp;q=65" alt="" loading="lazy">
+                  <b>MAISON<br>NORD</b>
+                </span>
+                <span class="wm-card wm-card--bake">
+                  <img src="https://images.unsplash.com/photo-1638202956270-8167b5c88ce6?auto=format&amp;fit=crop&amp;w=360&amp;q=65" alt="" loading="lazy">
+                  <b>Bonjour</b>
+                </span>
+              </div>
+              <p class="wm-feed__sub">Nouveautés <span>Derniers modèles</span></p>
+              <div class="wm-feed__strip">
+                <span style="background-image:url('https://images.unsplash.com/photo-1676148817751-10fbbd99b0a7?auto=format&amp;fit=crop&amp;w=240&amp;q=60')"></span>
+                <span style="background-image:url('https://images.unsplash.com/photo-1549791084-5f78368b208b?auto=format&amp;fit=crop&amp;w=240&amp;q=60')"></span>
+                <span style="background-image:url('https://images.unsplash.com/photo-1698515129669-7af840870238?auto=format&amp;fit=crop&amp;w=240&amp;q=60')"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sur-mesure -->
+        <div class="wm wm--describe" data-anim>
+          <svg class="wm-grain" aria-hidden="true"><rect width="100%" height="100%" filter="url(#f-grain)"/></svg>
+          <div class="wm-prompt">
+            <p class="wm-prompt__text"><span data-type>Un site élégant pour mon restaurant au bord du lac</span><i class="wm-caret"></i></p>
+            <div class="wm-prompt__bar">
+              <span class="wm-att"><svg><use href="#i-image"/></svg>Joindre une image</span>
+              <span class="wm-att"><svg><use href="#i-clip"/></svg>Joindre un fichier</span>
+              <span class="wm-send"><svg><use href="#i-arrow-up"/></svg></span>
+            </div>
+          </div>
+        </div>
+        <!-- Code -->
+        <div class="wm wm--code" data-anim>
+          <div class="wm-editor">
+            <div class="wm-editor__tabs"><span class="is-on">hero.html</span><span>style.css</span><span>scroll.js</span></div>
+            <pre class="wm-editor__code" aria-hidden="true"><code data-code></code></pre>
+          </div>
+          <div class="wm-live">
+            <span class="wm-live__bar"><i></i><i></i><i></i></span>
+            <div class="wm-live__page"><b>Le Rivage</b><span>Réserver une table</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ways__list">
+        <p class="label" data-split>Trois façons de démarrer</p>
+        <div class="ways__items" role="tablist" aria-label="Façons de démarrer">
+          <button class="way is-active" type="button" role="tab" aria-selected="true" data-way="0">
+            <span class="way__title">Modèle</span>
+            <span class="way__desc"><span>Partez d'un modèle pensé pour votre métier, adapté à votre image.</span></span>
+          </button>
+          <button class="way" type="button" role="tab" aria-selected="false" data-way="1">
+            <span class="way__title">Sur-mesure</span>
+            <span class="way__desc"><span>Décrivez votre projet ou montrez-nous vos inspirations : nous dessinons votre site de zéro, page par page.</span></span>
+          </button>
+          <button class="way" type="button" role="tab" aria-selected="false" data-way="2">
+            <span class="way__title">Code</span>
+            <span class="way__desc"><span>Réservation, boutique, espace client : nous développons la fonctionnalité précise dont vous avez besoin.</span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. Carrousel de modèles ============ -->
+  <section class="gal" id="modeles">
+    <div class="wrap">
+      <p class="label label--center" data-split>Des modèles inspirés de chaque métier</p>
+      <h2 class="h3 gal__title" data-split>Les plus beaux sites se construisent bloc par bloc.</h2>
+      <div class="gal__box" data-reveal>
+        <div class="gal__viewport" data-cursor="Glisser">
+          <div class="gal__track">
+            <figure class="gcard gcard--45">
+              <div class="gcard__media mock mock--resto">
+                <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy">
+                <span class="mock__nav"><b>LE RIVAGE</b><i></i></span>
+                <span class="mock__title">Une table<br><em>au bord du lac</em></span>
+                <span class="mock__pill">Réserver</span>
+              </div>
+              <figcaption><b>Une table au bord du lac</b><span>Restaurant</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--916">
+              <div class="gcard__media mock mock--vigne">
+                <img src="https://images.unsplash.com/photo-1758930343232-04f088a342a8?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy">
+                <span class="mock__panel"><small>Neuchâtel — depuis 1924</small><b>Domaine<br>des Pierres</b><span>Découvrir nos vins →</span></span>
+              </div>
+              <figcaption><b>Le goût du terroir</b><span>Vigneron</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--11">
+              <div class="gcard__media mock mock--hotel">
+                <img src="https://images.unsplash.com/photo-1760594043210-c5d4ca163df4?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy">
+                <span class="mock__title">Hôtel du Lac</span>
+                <span class="mock__book"><i>Arrivée</i><i>Départ</i><b>Réserver</b></span>
+              </div>
+              <figcaption><b>Chambres avec vue</b><span>Hôtel</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--916">
+              <div class="gcard__media mock mock--atelier">
+                <span class="mock__arch"><img src="https://images.unsplash.com/photo-1649810617979-16001a60c89c?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy"></span>
+                <b class="mock__big">ATELIER<br>TERRE</b>
+                <span class="mock__sub">Céramique faite main à Neuchâtel</span>
+              </div>
+              <figcaption><b>Fait main, ici</b><span>Artisan</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--45">
+              <div class="gcard__media mock mock--mode">
+                <img src="https://images.unsplash.com/photo-1762605135012-56a59a059e60?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy">
+                <b class="mock__big">MAISON NORD</b>
+                <span class="mock__sub">Nouvelle collection — Automne</span>
+              </div>
+              <figcaption><b>Nouvelle collection</b><span>Boutique</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--11">
+              <div class="gcard__media mock mock--boul">
+                <span class="mock__disc"><img src="https://images.unsplash.com/photo-1747459707229-7b1b7c8367e0?auto=format&amp;fit=crop&amp;w=320&amp;q=70" alt="" loading="lazy"></span>
+                <b class="mock__big">Fleur</b>
+                <span class="mock__sub">Commander pour demain →</span>
+              </div>
+              <figcaption><b>Le croissant du matin</b><span>Boulangerie</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--916">
+              <div class="gcard__media mock mock--yoga">
+                <img src="https://images.unsplash.com/photo-1763403921315-f2ef8697199f?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy">
+                <b class="mock__big">souffle</b>
+                <span class="mock__chips"><i>Lun 18:30</i><i>Mer 12:15</i><i>Sam 09:00</i></span>
+              </div>
+              <figcaption><b>Respirer, bouger</b><span>Yoga &amp; bien-être</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--45">
+              <div class="gcard__media mock mock--archi">
+                <img src="https://images.unsplash.com/photo-1628012209120-d9db7abf7eab?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy">
+                <b class="mock__big">Atelier<br>Volume</b>
+                <span class="mock__sub">Projets 01 — 12</span>
+              </div>
+              <figcaption><b>Bâtir l'avenir</b><span>Architecte</span></figcaption>
+            </figure>
+            <figure class="gcard gcard--11">
+              <div class="gcard__media mock mock--cabinet">
+                <img src="https://images.unsplash.com/photo-1633934225785-db753d6fe6ca?auto=format&amp;fit=crop&amp;w=420&amp;q=70" alt="" loading="lazy">
+                <span class="mock__rdv"><b>Prendre rendez-vous</b><span class="mock__days"><i>L</i><i>M</i><i class="on">M</i><i>J</i><i>V</i></span></span>
+              </div>
+              <figcaption><b>Prendre rendez-vous</b><span>Cabinet</span></figcaption>
+            </figure>
+          </div>
+        </div>
+        <a class="btn btn--dark gal__btn" href="#tarifs"><span>Demander un modèle</span><svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. Déclinaisons ============ -->
+  <section class="var">
+    <div class="wrap var__grid">
+      <div class="var__text">
+        <p class="label" data-split>Plus loin, plus vite</p>
+        <h2 class="h3" data-split>Déclinez votre site en un clin d'œil.</h2>
+        <p class="body" data-split>Langues, formats d'écran, variantes de couleurs : New Architect adapte votre site à chaque public, sans repartir de zéro.</p>
+      </div>
+      <div class="var__stage" data-reveal data-anim>
+        <div class="var__screen" data-variant="0">
+          <span class="var__brand">RIVE</span>
+          <span class="var__img"><img src="https://images.unsplash.com/photo-1736871328071-36a1aebfde76?auto=format&amp;fit=crop&amp;w=600&amp;q=70" alt="" loading="lazy"></span>
+          <span class="var__word" data-var-word>Bienvenue</span>
+          <span class="var__lang" data-var-lang>FR</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. Double bloc ============ -->
+  <section class="duo">
+    <div class="wrap duo__grid">
+      <article class="dcard" data-reveal>
+        <div class="dcard__head">
+          <h3 class="h4">Donnez vie à tous vos contenus.</h3>
+          <a class="dcard__arrow" href="#methode" aria-label="Voir notre méthode"><svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="dcard__media" data-anim>
+          <div class="screen"><canvas class="slit" data-slit></canvas></div>
+          <div class="dcard__chips"><span class="chip-img"></span><span class="chip-logo"><svg viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg></span></div>
+        </div>
+        <p class="dcard__desc">Textes, logos, photos de produits : nous les sublimons avec les effets les plus actuels du web.</p>
+      </article>
+      <article class="dcard" data-reveal>
+        <div class="dcard__head">
+          <h3 class="h4">Haute performance.<br>Entièrement sur-mesure.</h3>
+          <a class="dcard__arrow" href="#services" aria-label="Voir nos services"><svg><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="dcard__media" data-anim>
+          <div class="perf" data-perf>
+            <span class="perf__head"><span class="perf__bubble">0,8&nbsp;s</span></span>
+            <div class="perf__top"><span class="fv-btn"><svg><use href="#i-pause"/></svg></span><span><b>Chargement</b> / 0,8&nbsp;s</span><span class="fv-sep"></span><span>Score <i>100</i></span><span class="perf__chip">Mobile</span></div>
+            <div class="perf__ruler"></div>
+            <div class="perf__gauges">
+              <div class="gauge" style="--v:100"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle class="gauge__arc" cx="18" cy="18" r="15.5"/></svg><b data-count="100">0</b><span>Performance</span></div>
+              <div class="gauge" style="--v:100"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle class="gauge__arc" cx="18" cy="18" r="15.5"/></svg><b data-count="100">0</b><span>Accessibilité</span></div>
+              <div class="gauge" style="--v:100"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle class="gauge__arc" cx="18" cy="18" r="15.5"/></svg><b data-count="100">0</b><span>Bonnes pratiques</span></div>
+              <div class="gauge" style="--v:100"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5"/><circle class="gauge__arc" cx="18" cy="18" r="15.5"/></svg><b data-count="100">0</b><span>Référencement</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="dcard__desc">Chargement éclair, code propre, référencement soigné : chaque site est optimisé au millimètre.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ 12. Trouvez votre style ============ -->
+  <section class="look">
+    <div class="wrap look__grid">
+      <div class="look__media" data-reveal data-anim>
+        <div class="poster poster--neon is-active">
+          <div class="neon">
+            <span style="--k:6">Nouveaux<br>horizons</span><span style="--k:5">Nouveaux<br>horizons</span><span style="--k:4">Nouveaux<br>horizons</span><span style="--k:3">Nouveaux<br>horizons</span><span style="--k:2">Nouveaux<br>horizons</span><span style="--k:1">Nouveaux<br>horizons</span><span class="neon__top">Nouveaux<br>horizons</span>
+          </div>
+        </div>
+        <div class="poster poster--epure">
+          <span class="ep__grid"></span>
+          <span class="ep__dot"></span>
+          <b class="ep__title">Moins,<br>mais<br>mieux.</b>
+          <span class="ep__meta">New Architect<br>Neuchâtel — CH</span>
+          <span class="ep__num">02</span>
+        </div>
+        <div class="poster poster--edito">
+          <img src="https://images.unsplash.com/photo-1667743537770-2b4691bfe7a3?auto=format&amp;fit=crop&amp;w=900&amp;q=70" alt="" loading="lazy">
+          <span class="ed__kicker">N°&nbsp;07 — Automne</span>
+          <b class="ed__title">L'art de<br><em>recevoir</em></b>
+          <span class="ed__foot">Domaine des Pierres · Lavaux</span>
+        </div>
+        <div class="poster poster--brut">
+          <b class="br__word">BÂTIR</b>
+          <b class="br__word br__word--2">BÂTIR</b>
+          <span class="br__tag">Studio d'art — 2026</span>
+        </div>
+      </div>
+
+      <div class="look__list">
+        <p class="label" data-split>Trouvez votre style</p>
+        <div class="look__rows">
+          <div class="lrow is-active" data-poster="0">
+            <button class="lrow__name" type="button"><b>Néon</b> <span>Motion design</span></button>
+            <div class="lrow__more"><div class="lrow__inner">
+              <span class="lrow__tile lt--neon">NH</span><span class="lrow__tile lt--wave"></span><span class="lrow__tile lt--glow"></span>
+              <a class="lrow__go" href="#modeles" aria-label="Voir les modèles"><svg><use href="#i-arrow"/></svg></a>
+            </div></div>
+          </div>
+          <div class="lrow" data-poster="1">
+            <button class="lrow__name" type="button"><b>Épure</b> <span>Style suisse</span></button>
+            <div class="lrow__more"><div class="lrow__inner">
+              <span class="lrow__tile lt--dot"></span><span class="lrow__tile lt--grid"></span><span class="lrow__tile lt--type">Aa</span>
+              <a class="lrow__go" href="#modeles" aria-label="Voir les modèles"><svg><use href="#i-arrow"/></svg></a>
+            </div></div>
+          </div>
+          <div class="lrow" data-poster="2">
+            <button class="lrow__name" type="button"><b>Éditorial</b> <span>Magazine</span></button>
+            <div class="lrow__more"><div class="lrow__inner">
+              <span class="lrow__tile lt--photo"></span><span class="lrow__tile lt--serif">Ag</span><span class="lrow__tile lt--cols"></span>
+              <a class="lrow__go" href="#modeles" aria-label="Voir les modèles"><svg><use href="#i-arrow"/></svg></a>
+            </div></div>
+          </div>
+          <div class="lrow" data-poster="3">
+            <button class="lrow__name" type="button"><b>Brut</b> <span>Studio d'art</span></button>
+            <div class="lrow__more"><div class="lrow__inner">
+              <span class="lrow__tile lt--brut">B</span><span class="lrow__tile lt--stripe"></span><span class="lrow__tile lt--mono">01</span>
+              <a class="lrow__go" href="#modeles" aria-label="Voir les modèles"><svg><use href="#i-arrow"/></svg></a>
+            </div></div>
+          </div>
+        </div>
+        <a class="btn btn--light look__btn" href="#modeles"><span>Tous les blocs &amp; modèles</span><svg><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 13. Tarifs : formulaire « glass » ============ -->
+  <section class="quote" id="tarifs" data-quote>
+    <div class="wrap">
+      <div class="quote__head">
+        <p class="label label--center" data-split>Tarifs</p>
+        <h2 class="quote__title" data-split>Prêt à commencer&nbsp;?</h2>
+        <p class="quote__sub" data-split>Choisissez votre budget, dites-nous en quelques mots ce que vous imaginez&nbsp;: nous revenons vers vous avec une proposition sur-mesure.</p>
+      </div>
+
+      <div class="quote__stage" data-reveal>
+        <div class="quote__glow" aria-hidden="true">
+          <span class="qb qb--1"></span>
+          <span class="qb qb--2"></span>
+          <span class="qb qb--3"></span>
+          <span class="qb qb--prism"></span>
+        </div>
+
+        <form class="quote__card" novalidate data-quote-form>
+          <div class="qf-grid">
+            <label class="qf">
+              <span class="sr-only">Nom et prénom</span>
+              <svg class="qf__ico" aria-hidden="true"><use href="#i-user"/></svg>
+              <input type="text" name="nom" placeholder="Nom, prénom *" autocomplete="name" required>
+              <span class="qf__line"></span>
+            </label>
+            <label class="qf">
+              <span class="sr-only">Société</span>
+              <svg class="qf__ico" aria-hidden="true"><use href="#i-brief"/></svg>
+              <input type="text" name="societe" placeholder="Nom de société" autocomplete="organization">
+              <span class="qf__line"></span>
+            </label>
+            <label class="qf">
+              <span class="sr-only">E-mail</span>
+              <svg class="qf__ico" aria-hidden="true"><use href="#i-mail"/></svg>
+              <input type="email" name="email" placeholder="E-mail *" autocomplete="email" required>
+              <span class="qf__line"></span>
+            </label>
+            <label class="qf">
+              <span class="sr-only">Téléphone</span>
+              <svg class="qf__ico" aria-hidden="true"><use href="#i-phone"/></svg>
+              <input type="tel" name="telephone" placeholder="Numéro de téléphone" autocomplete="tel">
+              <span class="qf__line"></span>
+            </label>
+            <label class="qf qf--full">
+              <span class="sr-only">Votre projet</span>
+              <svg class="qf__ico" aria-hidden="true"><use href="#i-rocket"/></svg>
+              <textarea name="projet" rows="4" placeholder="Parlez-nous de votre projet en quelques mots *" required></textarea>
+              <span class="qf__line"></span>
+            </label>
+          </div>
+
+          <fieldset class="qbud">
+            <legend class="qbud__legend">Quel budget envisagez-vous&nbsp;?</legend>
+            <div class="qbud__grid">
+              <label class="qbud__opt">
+                <input type="checkbox" name="budget" value="CHF 1’500">
+                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+                <span class="qbud__val"><small>CHF</small>1’500</span>
+              </label>
+              <label class="qbud__opt">
+                <input type="checkbox" name="budget" value="CHF 3’000">
+                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+                <span class="qbud__val"><small>CHF</small>3’000</span>
+              </label>
+              <label class="qbud__opt">
+                <input type="checkbox" name="budget" value="CHF 5’000">
+                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+                <span class="qbud__val"><small>CHF</small>5’000</span>
+              </label>
+              <label class="qbud__opt">
+                <input type="checkbox" name="budget" value="CHF 10’000">
+                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
+                <span class="qbud__val"><small>CHF</small>10’000</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="quote__foot">
+            <p class="quote__note" data-quote-note>Vos informations servent uniquement à répondre à votre demande.</p>
+            <button class="btn btn--dark quote__send" type="submit"><span>Envoyer ma demande</span><svg><use href="#i-arrow"/></svg></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ Pied de page ============ -->
+<footer class="ftr" id="contact">
+  <div class="wrap ftr__cols">
+    <div class="ftr__col">
+      <p class="label">Explorer</p>
+      <a class="roll" href="#blocs"><span class="roll__in" data-text="Blocs">Blocs</span></a>
+      <a class="roll" href="#services"><span class="roll__in" data-text="Services">Services</span></a>
+      <a class="roll" href="#methode"><span class="roll__in" data-text="Méthode">Méthode</span></a>
+      <a class="roll" href="#modeles"><span class="roll__in" data-text="Modèles">Modèles</span></a>
+      <a class="roll" href="#tarifs"><span class="roll__in" data-text="Tarifs">Tarifs</span></a>
+      <a class="roll" href="#tarifs"><span class="roll__in" data-text="Nous écrire">Nous écrire</span></a>
+    </div>
+    <div class="ftr__col">
+      <p class="label">Légal</p>
+      <a class="roll" href="confidentialite.html"><span class="roll__in" data-text="Confidentialité">Confidentialité</span></a>
+      <a class="roll" href="cookies.html"><span class="roll__in" data-text="Cookies">Cookies</span></a>
+      <a class="roll" href="mentions-legales.html"><span class="roll__in" data-text="Mentions légales">Mentions légales</span></a>
+    </div>
+    <div class="ftr__col ftr__col--end">
+      <p class="label">Studio</p>
+      <a class="roll" href="mailto:hello@newarchitect.ch"><span class="roll__in" data-text="hello@newarchitect.ch">hello@newarchitect.ch</span></a>
+      <span>Neuchâtel, Suisse</span>
+    </div>
+  </div>
+
+  <div class="ftr__logo" aria-hidden="true">
+    <div class="ftr__stack">
+      <svg class="ftr__layer" style="--i:12" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:11" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:10" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:9" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:8" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:7" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:6" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:5" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:4" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:3" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:2" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer" style="--i:1" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+      <svg class="ftr__layer ftr__layer--top" viewBox="0 0 1053.33 115.38"><use href="#logo"/></svg>
+    </div>
+  </div>
+
+  <div class="wrap ftr__bottom">
+    <span>Copyright © 2026 New Architect</span>
+    <span>Tous droits réservés.</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/three-scenes.js" defer></script>
+</body>
+</html>
