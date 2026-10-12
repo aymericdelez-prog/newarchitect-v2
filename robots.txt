@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://newarchitect.ch/sitemap.xml
+Sitemap: https://new-architect.ch/sitemap.xml
