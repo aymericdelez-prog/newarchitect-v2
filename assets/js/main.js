@@ -1001,7 +1001,7 @@
         String(d.get('projet')),
       ].filter((l, i) => l || i === 5).join('\n');
       const subject = `Demande de devis — ${d.get('nom')}`;
-      window.location.href = `mailto:hello@newarchitect.ch?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:V.Menzar@Newarchitect.ch?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       note.textContent = 'Merci ! Votre messagerie s’ouvre avec votre demande prête à envoyer.';
       note.className = 'quote__note is-ok';
       setTimeout(() => { note.textContent = defaultNote; note.className = 'quote__note'; }, 9000);
