@@ -2089,9 +2089,9 @@ html:not(.js) .loader { display: none; }
   transition: transform 1.4s var(--ease);
 }
 .qb { position: absolute; aspect-ratio: 1; border-radius: 50%; filter: blur(36px); opacity: .9; animation: qbFloat 14s ease-in-out infinite alternate; will-change: transform; /* flou calculé une fois, puis simplement déplacé */ }
-.qb--1 { left: 26%; top: 18%; width: 40%; background: radial-gradient(circle at 40% 40%, #ff7a59, #ff4f7b 55%, transparent 72%); }
-.qb--2 { left: 46%; top: 38%; width: 40%; background: radial-gradient(circle at 50% 50%, #ffa23d, #ffd56b 50%, transparent 72%); animation-duration: 17s; animation-delay: -5s; }
-.qb--3 { left: 16%; top: 52%; width: 30%; background: radial-gradient(circle, #ff9a7a, #ffc29b 50%, transparent 72%); animation-duration: 12s; animation-delay: -8s; opacity: .8; }
+.qb--1 { left: 26%; top: 18%; width: 40%; background: radial-gradient(circle at 40% 40%, #ff6f9c, #ff8fb3 55%, transparent 72%); opacity: .75; }
+.qb--2 { left: 46%; top: 38%; width: 40%; background: radial-gradient(circle at 50% 50%, #ffb7cf, #ffd3e2 50%, transparent 72%); opacity: .85; animation-duration: 17s; animation-delay: -5s; }
+.qb--3 { left: 16%; top: 52%; width: 30%; background: radial-gradient(circle, #ff8fb3, #ffc3d6 50%, transparent 72%); animation-duration: 12s; animation-delay: -8s; opacity: .7; }
 .qb--prism {
   left: 40%;
   top: 30%;
@@ -2099,7 +2099,7 @@ html:not(.js) .loader { display: none; }
   border-radius: 26%;
   filter: blur(12px);
   opacity: .8;
-  background: conic-gradient(from var(--a, 0deg), #ff8a65, #ffb74d, #ffd54f, #ff7f9e, #ff6f61, #ff8a65);
+  background: conic-gradient(from var(--a, 0deg), #ff8fb3, #ffb7cf, #ffd3e2, #ff9ec4, #ff6f9c, #ff8fb3);
   animation: qbTurn 22s linear infinite; /* rotation seule : pas de redessin à chaque image */
 }
 @keyframes qbFloat {

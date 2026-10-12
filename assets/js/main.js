@@ -941,7 +941,7 @@
       quote.addEventListener('pointerleave', () => { glow.style.setProperty('--gx', '0px'); glow.style.setProperty('--gy', '0px'); });
     }
 
-    // Budget : barre linéaire de CHF 500 à 20’000 et +, la position correspond au montant
+    // Budget : barre linéaire de CHF 1’500 à 20’000 et +, la position correspond au montant
     const bud = $('[data-budget]', qform);
     let budgetText = '';
     if (bud) {
