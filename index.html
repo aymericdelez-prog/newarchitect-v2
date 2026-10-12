@@ -300,7 +300,7 @@
       <div class="story__text">
         <p class="label" data-split>Un bloc pour chaque idée</p>
         <div class="fx" data-fx data-cursor="Ajouter un bloc">
-          <h2 class="h2 fx__title" data-split>Parcourez nos <span class="nw" data-keep><span class="fx__word"><span class="fx__glow" aria-hidden="true"></span><span class="fx__inflate" aria-hidden="true"><b style="--i:0">b</b><b style="--i:1">l</b><b style="--i:2">o</b><b style="--i:3">c</b><b style="--i:4">s</b></span><span class="fx__plain">blocs</span></span>&nbsp;:</span> animations, typographie cinétique, 3D, effets de lumière et plus encore.</h2>
+          <h2 class="h2 fx__title" data-split>Parcourez nos blocs&nbsp;: animations, typographie cinétique, 3D, effets de lumière et plus encore.</h2>
           <p class="h2 fx__title fx__halftone" aria-hidden="true">Parcourez nos <span class="nw">blocs&nbsp;:</span> animations, typographie cinétique, 3D, effets de lumière et plus encore.</p>
         </div>
       </div>
@@ -311,9 +311,9 @@
           <span class="lib__close" aria-hidden="true"><svg><use href="#i-x"/></svg></span>
         </div>
         <div class="lib__grid">
-          <button class="lib__cell" type="button" data-effect="inflate" data-cursor="Ajouter un bloc">
-            <span class="lib__tile mini mini--inflate"><span>BLO<br>CS</span></span>
-            <span class="lib__name">Gonflé</span>
+          <button class="lib__cell" type="button" data-effect="gradient" data-cursor="Ajouter un bloc">
+            <span class="lib__tile mini mini--grad"><span>Aa</span></span>
+            <span class="lib__name">Dégradé</span>
           </button>
           <button class="lib__cell" type="button" data-effect="glow" data-cursor="Ajouter un bloc">
             <span class="lib__tile mini mini--glow"><svg viewBox="0 0 102 122"><use href="#logo-n"/></svg></span>
@@ -721,7 +721,7 @@
       <article class="dcard" data-reveal>
         <div class="dcard__head">
           <h3 class="h4">Donnez vie à tous vos contenus.</h3>
-          <a class="dcard__arrow" href="#methode" aria-label="Voir notre méthode"><svg><use href="#i-arrow"/></svg></a>
+          <a class="dcard__arrow" href="#tarifs" aria-label="Demander un devis"><svg><use href="#i-arrow"/></svg></a>
         </div>
         <div class="dcard__media" data-anim>
           <div class="screen"><canvas class="slit" data-slit></canvas></div>
@@ -869,31 +869,18 @@
             </label>
           </div>
 
-          <fieldset class="qbud">
-            <legend class="qbud__legend">Quel budget envisagez-vous&nbsp;?</legend>
-            <div class="qbud__grid">
-              <label class="qbud__opt">
-                <input type="checkbox" name="budget" value="CHF 1’500">
-                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
-                <span class="qbud__val"><small>CHF</small>1’500</span>
-              </label>
-              <label class="qbud__opt">
-                <input type="checkbox" name="budget" value="CHF 3’000">
-                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
-                <span class="qbud__val"><small>CHF</small>3’000</span>
-              </label>
-              <label class="qbud__opt">
-                <input type="checkbox" name="budget" value="CHF 5’000">
-                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
-                <span class="qbud__val"><small>CHF</small>5’000</span>
-              </label>
-              <label class="qbud__opt">
-                <input type="checkbox" name="budget" value="CHF 10’000">
-                <span class="qbud__box" aria-hidden="true"><svg><use href="#i-check"/></svg></span>
-                <span class="qbud__val"><small>CHF</small>10’000</span>
-              </label>
+          <div class="qbud" data-budget>
+            <div class="qbud__head">
+              <span class="qbud__legend" id="qbud-label">Quel budget envisagez-vous&nbsp;?</span>
+              <output class="qbud__out" data-budget-out for="qbud-range">Glissez pour indiquer</output>
             </div>
-          </fieldset>
+            <div class="qbud__bar">
+              <span class="qbud__track" aria-hidden="true"><span class="qbud__hover"></span><span class="qbud__fill"></span></span>
+              <span class="qbud__thumb" aria-hidden="true"><span class="qbud__tip" data-budget-tip></span></span>
+              <input class="qbud__range" id="qbud-range" type="range" min="0" max="1000" step="1" value="0" aria-labelledby="qbud-label" aria-valuetext="Non indiqué">
+            </div>
+            <div class="qbud__scale" aria-hidden="true"><span>CHF&nbsp;500</span><span>CHF&nbsp;30’000 et&nbsp;+</span></div>
+          </div>
 
           <div class="quote__foot">
             <p class="quote__note" data-quote-note>Vos informations servent uniquement à répondre à votre demande.</p>

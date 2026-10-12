@@ -143,6 +143,7 @@ const easeOutBack = (t) => { t = clamp01(t); const c1 = 1.4, c3 = c1 + 1; return
 // Repères du logo complet (#logo, viewBox 1053.33 × 115.38) ; 1 unité = hauteur des capitales
 const WORD_U = 1 / 113.96, WORD_CX = 1053.33 / 2, WORD_CY = 115.38 / 2, WORD_W = 1053.33 * WORD_U;
 const NA_GAP = .16;
+const BASELINE = -(113.96 - WORD_CY) * WORD_U - .04; // ligne de base du mot (sous le biseau)
 const BLUEPRINT_MS = 950; // durée du tracé du plan (main.js) avant que la 3D prenne le relais
 
 function radialTex(stops) {
@@ -221,6 +222,13 @@ class LogoIntro {
     this.scene.add(key, this.rimL, this.rimR);
 
     this.mat = new THREE.MeshPhysicalMaterial({ color: 0x0b0b0c, metalness: .55, roughness: .2, clearcoat: 1, clearcoatRoughness: .05, envMapIntensity: 1.25 });
+    // Les lettres qui se retirent sont coupées à la ligne de base (plan de découpe)
+    r.localClippingEnabled = true;
+    this.clipUp = new THREE.Vector3(0, 1, 0);
+    this.clipPlane = new THREE.Plane(this.clipUp.clone(), 0);
+    this.restMat = this.mat.clone();
+    this.restMat.clippingPlanes = [this.clipPlane];
+    this.restMat.side = THREE.DoubleSide;
     this.na = new THREE.Group();
     this.N = new THREE.Mesh(this.G.n, this.mat);
     this.A = new THREE.Mesh(this.G.a, this.mat);
@@ -277,7 +285,7 @@ class LogoIntro {
       else if (i === aIdx) letters.push({ mesh: this.A, x: aBox.x, core: true });
       else {
         const L = wordLetter(d);
-        const mesh = new THREE.Mesh(L.geo, this.mat);
+        const mesh = new THREE.Mesh(L.geo, this.restMat);
         mesh.position.set(L.x, L.y, 0);
         this.na.add(mesh);
         const item = { mesh, x: L.x, y: L.y, to: L.x < aBox.x ? 'N' : 'A' };
@@ -288,16 +296,11 @@ class LogoIntro {
     // Ordre de construction : de gauche à droite (comme le tracé du plan)
     letters.sort((a, b) => a.x - b.x).forEach((l, i) => { l.build = i * .04; });
     this.letters = letters;
-    // Ordre d'aspiration : les plus proches d'abord, en alternant N et A
+    // Ordre de retrait : les voisines du N et du A d'abord, puis la vague s'éloigne
     const tx = (it) => (it.to === 'N' ? nBox.x : aBox.x);
     [...this.rest].sort((a, b) => Math.abs(a.x - tx(a)) - Math.abs(b.x - tx(b))).forEach((it, i) => {
-      it.start = 1 + i * .075;
-      it.lift = .35 + (i % 3) * .14;
-      it.sign = it.x < tx(it) ? -1 : 1;
-      it.done = false;
+      it.start = .95 + i * .065;
     });
-    this.pulseN = { x: 0, v: 0 };
-    this.pulseA = { x: 0, v: 0 };
   }
   clearWord() {
     (this.rest || []).forEach((it) => { this.na.remove(it.mesh); it.mesh.geometry.dispose(); });
@@ -487,35 +490,25 @@ class LogoIntro {
     // Le mot s'incline pour montrer le volume, puis se remet de face
     const tilt = easeIO((e - .1) / .9) * (1 - easeIO((e - 1.75) / .8));
 
-    // 2. Aspiration : les autres lettres décollent, tournent et filent dans le N ou le A
+    // 2. Retrait : les autres lettres s'enfoncent sous la ligne de base, comme derrière
+    //    un cache, en basculant très légèrement vers l'arrière
     this.rest.forEach((it) => {
-      const u = clamp01((e - it.start) / .62);
+      const u = clamp01((e - it.start) / .75);
       const m = it.mesh;
-      if (u >= 1) {
-        if (!it.done) {
-          it.done = true;
-          (it.to === 'N' ? this.pulseN : this.pulseA).v += 4.2;
-        }
-        m.visible = false;
-        return;
-      }
-      const tgt = it.to === 'N' ? N.position : A.position;
-      const p = easeIn(u);
-      m.position.set(lerp(it.x, tgt.x, p), lerp(it.y, tgt.y, p) + Math.sin(u * Math.PI) * it.lift, Math.sin(u * Math.PI) * .9);
-      m.rotation.set(Math.sin(u * Math.PI) * .5, it.sign * u * Math.PI * 1.3, it.sign * u * .7);
-      const s = 1 - p * .96;
-      m.scale.set(s, s, s * it.k);
+      if (u >= 1) { m.visible = false; return; }
+      const p = easeIO(u);
+      m.position.set(it.x, it.y - p * 1.15, -p * .12);
+      m.rotation.set(-p * .32, 0, 0);
+      m.scale.set(1, 1, it.k);
     });
 
     // 3. Le N et le A se rejoignent en monogramme
-    const sl = easeIO((e - 1.85) / .8);
-    spring(this.pulseN, 0, 220, 11, dt);
-    spring(this.pulseA, 0, 220, 11, dt);
+    const sl = easeIO((e - 1.9) / .8);
     const nk = this.letters.find((l) => l.mesh === N).k, ak = this.letters.find((l) => l.mesh === A).k;
-    const pn = 1 + this.pulseN.x * .1, pa = (1 + this.pulseA.x * .1) * lerp(this.aFit, 1, sl);
+    const pa = lerp(this.aFit, 1, sl);
     N.position.set(lerp(this.nStart.x, this.G.nx, sl), lerp(this.nStart.y, 0, sl), 0);
     A.position.set(lerp(this.aStart.x, this.G.ax, sl), lerp(this.aStart.y, 0, sl), 0);
-    N.scale.set(pn, pn, pn * nk);
+    N.scale.set(1, 1, nk);
     A.scale.set(pa, pa, pa * ak);
 
     // 4. Le NA s'envole jusqu'à sa place dans le hero, en faisant un tour
@@ -530,6 +523,9 @@ class LogoIntro {
     this.rimL.intensity = 22;
     this.rimR.intensity = 15;
     this.placeRims(this.na.position, this.na.scale.x);
+    // Cache horizontal : tout ce qui passe sous la ligne de base du mot est masqué
+    this.na.updateMatrixWorld(true);
+    this.clipPlane.set(this.clipUp, -BASELINE).applyMatrix4(this.na.matrixWorld);
 
     if (!this.revealed && e > 3.1) {
       this.revealed = true;

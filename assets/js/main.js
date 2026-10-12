@@ -518,24 +518,19 @@
   const fx = $('[data-fx]');
   if (fx) {
     const title = $('.fx__title:not(.fx__halftone)', fx);
-    const focusWord = $('.fx__word', fx);
     const cells = $$('.lib__cell');
-    const effects = ['inflate', 'glow', 'focus', 'halftone'];
+    const effects = ['gradient', 'glow', 'focus', 'halftone'];
     const setEffect = (name) => {
       effects.forEach((n) => fx.classList.remove('effect-' + n));
       cells.forEach((c) => c.classList.toggle('is-on', c.dataset.effect === name));
       if (!name) return;
-      if (name === 'focus') {
-        const words = wrapWords(title);
-        const fr = focusWord.getBoundingClientRect();
-        const fcx = fr.left + fr.width / 2;
-        const fcy = fr.top + fr.height / 2;
-        words.forEach((w) => {
-          const r = w.getBoundingClientRect();
-          const d = Math.hypot((r.left + r.width / 2 - fcx) * .85, (r.top + r.height / 2 - fcy) * 1.7);
-          w.style.setProperty('--blur', clamp((d - fr.width * .9) / 34, 0, 9).toFixed(2) + 'px');
-        });
-      }
+      const words = wrapWords(title);
+      const tr = title.getBoundingClientRect();
+      words.forEach((w, i) => {
+        // Dégradé continu d'un mot à l'autre ; mise au point qui avance mot après mot
+        w.style.setProperty('--gx', (w.getBoundingClientRect().left - tr.left).toFixed(1) + 'px');
+        w.style.setProperty('--wi', i);
+      });
       fx.classList.add('effect-' + name);
     };
     cells.forEach((c) => {
@@ -631,22 +626,34 @@
     const app = $('.kit__app', kit);
     const text = $('.kit__text', kit);
     const rows = $$('[data-kit-row]', kit);
-    const mobile = () => innerWidth < 768;
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: kit,
-        start: 'top top',
-        end: () => '+=' + Math.round(innerHeight * 1.7),
-        pin: true,
-        scrub: .7,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
+    const mm = gsap.matchMedia();
+    // Ordinateur : section épinglée, l'appli glisse par-dessus le texte
+    mm.add('(min-width: 768px)', () => {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: kit,
+          start: 'top top',
+          end: () => '+=' + Math.round(innerHeight * 1.7),
+          pin: true,
+          scrub: .7,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+        .fromTo(app, { x: () => innerWidth * .5 }, { x: 0, ease: 'none' }, 0)
+        .fromTo(text, { x: 0, opacity: 1 }, { x: () => -innerWidth * .38, opacity: 0, ease: 'none' }, 0)
+        .fromTo(rows[0], { x: 0 }, { x: () => -innerWidth * .06, ease: 'none' }, 0)
+        .fromTo(rows[1], { x: 0 }, { x: () => -innerWidth * .18, ease: 'none' }, 0);
     });
-    tl.fromTo(app, { x: () => (mobile() ? innerWidth : innerWidth * .5) }, { x: 0, ease: 'none' }, 0)
-      .fromTo(text, { x: 0, opacity: 1 }, { x: () => (mobile() ? 0 : -innerWidth * .38), opacity: () => (mobile() ? 1 : 0), ease: 'none' }, 0)
-      .fromTo(rows[0], { x: 0 }, { x: () => -innerWidth * .06, ease: 'none' }, 0)
-      .fromTo(rows[1], { x: 0 }, { x: () => -innerWidth * .18, ease: 'none' }, 0);
+    // Téléphone : défilement normal (pas d'épinglage ni de glissement latéral de la section),
+    // seules les rangées de blocs et de modèles dérivent doucement
+    mm.add('(max-width: 767px)', () => {
+      rows.forEach((row, i) => gsap.fromTo(row, { x: 0 }, {
+        x: () => -innerWidth * (i ? .18 : .08),
+        ease: 'none',
+        scrollTrigger: { trigger: kit, start: 'top bottom', end: 'bottom top', scrub: .7, invalidateOnRefresh: true },
+      }));
+    });
   }
 
   /* =========================================================
@@ -934,13 +941,39 @@
       quote.addEventListener('pointerleave', () => { glow.style.setProperty('--gx', '0px'); glow.style.setProperty('--gy', '0px'); });
     }
 
-    // Cases à cocher des budgets (classe de secours si :has() n'est pas pris en charge)
-    $$('.qbud__opt input', qform).forEach((input) => {
-      const opt = input.closest('.qbud__opt');
-      input.addEventListener('change', () => opt.classList.toggle('is-checked', input.checked));
-      input.addEventListener('focus', () => opt.classList.add('is-focus'));
-      input.addEventListener('blur', () => opt.classList.remove('is-focus'));
-    });
+    // Budget : barre libre (échelle progressive de CHF 500 à 30’000 et +), sans palier suggéré
+    const bud = $('[data-budget]', qform);
+    let budgetText = '';
+    if (bud) {
+      const range = $('.qbud__range', bud), out = $('[data-budget-out]', bud), tip = $('[data-budget-tip]', bud), bar = $('.qbud__bar', bud);
+      const fmt = (n) => 'CHF ' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '’');
+      const amount = (t) => {
+        const v = 500 * Math.pow(60, t);
+        const step = v < 2000 ? 100 : v < 10000 ? 250 : v < 20000 ? 500 : 1000;
+        return Math.round(v / step) * step;
+      };
+      const label = (t) => (t >= .999 ? fmt(30000) + ' et +' : fmt(amount(t)));
+      const update = () => {
+        const t = range.value / 1000;
+        bud.style.setProperty('--p', t);
+        tip.textContent = label(t);
+        if (bud.classList.contains('is-set')) {
+          budgetText = label(t);
+          out.textContent = budgetText;
+          range.setAttribute('aria-valuetext', budgetText);
+        }
+      };
+      range.addEventListener('input', () => { bud.classList.add('is-set'); update(); });
+      range.addEventListener('pointerdown', () => { bud.classList.add('is-drag'); });
+      addEventListener('pointerup', () => bud.classList.remove('is-drag'));
+      addEventListener('pointercancel', () => bud.classList.remove('is-drag'));
+      // Aperçu au survol, comme la barre de lecture d'une vidéo
+      bar.addEventListener('pointermove', (e) => {
+        const r = bar.getBoundingClientRect();
+        bud.style.setProperty('--h', clamp((e.clientX - r.left) / r.width).toFixed(4));
+      });
+      update();
+    }
 
     const note = $('[data-quote-note]', qform);
     const defaultNote = note.textContent;
@@ -963,13 +996,12 @@
         return;
       }
       const d = new FormData(qform);
-      const budgets = d.getAll('budget');
       const body = [
         `Nom : ${d.get('nom')}`,
         d.get('societe') ? `Société : ${d.get('societe')}` : '',
         `E-mail : ${d.get('email')}`,
         d.get('telephone') ? `Téléphone : ${d.get('telephone')}` : '',
-        `Budget : ${budgets.length ? budgets.join(', ') : 'à définir'}`,
+        `Budget : ${budgetText || 'à définir'}`,
         '',
         String(d.get('projet')),
       ].filter((l, i) => l || i === 5).join('\n');
