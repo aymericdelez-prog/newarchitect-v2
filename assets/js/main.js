@@ -941,37 +941,32 @@
       quote.addEventListener('pointerleave', () => { glow.style.setProperty('--gx', '0px'); glow.style.setProperty('--gy', '0px'); });
     }
 
-    // Budget : barre libre (échelle progressive de CHF 500 à 30’000 et +), sans palier suggéré
+    // Budget : barre linéaire de CHF 500 à 20’000 et +, la position correspond au montant
     const bud = $('[data-budget]', qform);
     let budgetText = '';
     if (bud) {
-      const range = $('.qbud__range', bud), out = $('[data-budget-out]', bud), tip = $('[data-budget-tip]', bud), bar = $('.qbud__bar', bud);
+      const range = $('.qbud__range', bud), out = $('[data-budget-out]', bud), tip = $('[data-budget-tip]', bud), track = $('.qbud__track', bud);
+      const min = +range.min, max = +range.max;
       const fmt = (n) => 'CHF ' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '’');
-      const amount = (t) => {
-        const v = 500 * Math.pow(60, t);
-        const step = v < 2000 ? 100 : v < 10000 ? 250 : v < 20000 ? 500 : 1000;
-        return Math.round(v / step) * step;
-      };
-      const label = (t) => (t >= .999 ? fmt(30000) + ' et +' : fmt(amount(t)));
+      const label = (v) => (v >= max ? fmt(max) + ' et +' : fmt(v));
       const update = () => {
-        const t = range.value / 1000;
-        bud.style.setProperty('--p', t);
-        tip.textContent = label(t);
+        const v = +range.value;
+        bud.style.setProperty('--p', ((v - min) / (max - min)).toFixed(4));
+        tip.textContent = label(v);
         if (bud.classList.contains('is-set')) {
-          budgetText = label(t);
+          budgetText = label(v);
           out.textContent = budgetText;
           range.setAttribute('aria-valuetext', budgetText);
         }
       };
+      // Le dégradé est dimensionné sur toute la barre : il se dévoile au fil du remplissage
+      const size = () => bud.style.setProperty('--tw', track.clientWidth + 'px');
+      size();
+      addEventListener('resize', size);
       range.addEventListener('input', () => { bud.classList.add('is-set'); update(); });
-      range.addEventListener('pointerdown', () => { bud.classList.add('is-drag'); });
+      range.addEventListener('pointerdown', () => bud.classList.add('is-drag'));
       addEventListener('pointerup', () => bud.classList.remove('is-drag'));
       addEventListener('pointercancel', () => bud.classList.remove('is-drag'));
-      // Aperçu au survol, comme la barre de lecture d'une vidéo
-      bar.addEventListener('pointermove', (e) => {
-        const r = bar.getBoundingClientRect();
-        bud.style.setProperty('--h', clamp((e.clientX - r.left) / r.width).toFixed(4));
-      });
       update();
     }
 

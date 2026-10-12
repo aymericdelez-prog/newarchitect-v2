@@ -2158,48 +2158,67 @@ html:not(.js) .loader { display: none; }
 .qf.is-invalid input, .qf.is-invalid textarea { border-bottom-color: #e03a3a; }
 .qf.is-invalid .qf__ico { color: #e03a3a; }
 
-/* Budget : barre libre façon lecteur vidéo (aucun palier suggéré) */
-.qbud { --p: 0; margin: clamp(32px, 3.6vw, 50px) 0 0; }
-.qbud__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+/* Budget : barre en verre dépoli, linéaire (la position correspond au montant), aucun palier suggéré */
+.qbud { --p: 0; --th: 38px; margin: clamp(32px, 3.6vw, 50px) 0 0; }
+.qbud__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
 .qbud__legend { font-size: clamp(15px, 1.1vw, 17px); }
-.qbud__out { font-size: clamp(15px, 1.15vw, 18px); font-variant-numeric: tabular-nums; white-space: nowrap; color: rgba(15, 15, 15, .4); transition: color .4s var(--ease); }
-.qbud.is-set .qbud__out { color: var(--ink); }
-.qbud__bar { position: relative; height: 30px; touch-action: none; }
+.qbud__out {
+  font-size: clamp(15px, 1.1vw, 17px);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: rgba(15, 15, 15, .4);
+  transition: color .4s var(--ease);
+}
+.qbud.is-set .qbud__out { font-size: clamp(20px, 1.6vw, 26px); color: var(--ink); letter-spacing: -.01em; }
+/* La barre déborde un peu dans la marge de la carte : plus longue, donc plus précise */
+.qbud__bar { position: relative; height: 48px; margin-inline: calc(clamp(22px, 4vw, 58px) * -1 + 12px); }
 .qbud__track {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 4px;
-  margin-top: -2px;
-  border-radius: 4px;
-  background: rgba(15, 15, 15, .1);
-  overflow: hidden;
-  transition: height .25s var(--ease), margin-top .25s var(--ease);
+  inset: 0;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, .85);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, .22));
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -8px 16px -10px rgba(120, 50, 20, .18), 0 10px 26px -18px rgba(120, 50, 20, .35);
+  transition: box-shadow .4s var(--ease);
 }
-.qbud__hover, .qbud__fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: inherit; }
-.qbud__hover { width: calc(var(--h, 0) * 100%); background: rgba(15, 15, 15, .1); opacity: 0; transition: opacity .25s var(--ease); }
-.qbud__fill { width: calc(var(--p) * 100%); background: linear-gradient(90deg, #ff6f61, #ff9a4d, #ffc94d); }
+.qbud__bar:hover .qbud__track, .qbud.is-drag .qbud__track { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -8px 16px -10px rgba(120, 50, 20, .18), 0 0 0 4px rgba(255, 150, 90, .14), 0 14px 30px -18px rgba(255, 110, 50, .45); }
+/* Remplissage : le dégradé s'étale sur toute la barre et se dévoile à mesure qu'on avance */
+.qbud__fill {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  bottom: 4px;
+  width: calc(var(--th) + (100% - 8px - var(--th)) * var(--p));
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff7a6b, #ff9a5a 30%, #ffb84d 55%, #ffcf6b 75%, #ff8fa3);
+  background-size: var(--tw, 600px) 100%;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 6px 16px -8px rgba(255, 110, 50, .6);
+  opacity: .35;
+  transition: opacity .4s var(--ease);
+}
+.qbud.is-set .qbud__fill { opacity: 1; }
 .qbud__thumb {
   position: absolute;
-  top: 50%;
-  left: calc(var(--p) * 100%);
-  width: 16px;
-  height: 16px;
-  margin: -8px 0 0 -8px;
+  top: 4px;
+  left: calc(4px + (100% - 8px - var(--th)) * var(--p));
+  width: var(--th);
+  height: var(--th);
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 0 3px #ff8a4d, 0 4px 12px rgba(255, 110, 50, .35);
-  transform: scale(.55);
-  transition: transform .3s var(--spring);
-  pointer-events: none;
+  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 255, 255, .86) 60%, rgba(255, 240, 230, .8));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 4px 12px rgba(120, 50, 20, .22);
+  transition: transform .35s var(--spring);
 }
+.qbud__bar:hover .qbud__thumb { transform: scale(1.06); }
+.qbud.is-drag .qbud__thumb { transform: scale(1.12); }
 .qbud__tip {
   position: absolute;
   left: 50%;
-  bottom: calc(100% + 12px);
-  padding: 6px 10px;
-  border-radius: 8px;
+  bottom: calc(100% + 14px);
+  padding: 6px 11px;
+  border-radius: 9px;
   background: var(--ui);
   color: #fff;
   font-size: 13px;
@@ -2208,25 +2227,30 @@ html:not(.js) .loader { display: none; }
   opacity: 0;
   transform: translate(-50%, 4px);
   transition: opacity .25s var(--ease), transform .25s var(--ease);
+  pointer-events: none;
 }
+.qbud.is-drag .qbud__tip, .qbud__bar:has(.qbud__range:focus-visible) .qbud__tip { opacity: 1; transform: translate(-50%, 0); }
+/* Curseur natif invisible mais de la même taille : le doigt et la souris tombent juste */
 .qbud__range {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0 4px;
   opacity: 0;
-  cursor: pointer;
+  cursor: grab;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+  accent-color: #ff8a4d;
   -webkit-appearance: none;
   appearance: none;
+  background: transparent;
 }
-/* Au survol (ou pendant le glissement), la barre s'épaissit et le curseur apparaît, comme sur YouTube */
-.qbud__bar:hover .qbud__track, .qbud.is-drag .qbud__track, .qbud__bar:focus-within .qbud__track { height: 7px; margin-top: -3.5px; }
-.qbud__bar:hover .qbud__hover { opacity: 1; }
-.qbud__bar:hover .qbud__thumb, .qbud.is-drag .qbud__thumb, .qbud__bar:focus-within .qbud__thumb, .qbud.is-set .qbud__thumb { transform: scale(1); }
-.qbud.is-drag .qbud__tip, .qbud__bar:focus-within .qbud__tip { opacity: 1; transform: translate(-50%, 0); }
-.qbud__bar:has(.qbud__range:focus-visible) .qbud__track { outline: 2px solid rgba(255, 128, 70, .8); outline-offset: 4px; }
-.qbud__scale { display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; color: rgba(15, 15, 15, .4); }
+.qbud__range:active { cursor: grabbing; }
+.qbud__range::-webkit-slider-thumb { -webkit-appearance: none; width: var(--th); height: var(--th); border: 0; }
+.qbud__range::-moz-range-thumb { width: var(--th); height: var(--th); border: 0; }
+.qbud__bar:has(.qbud__range:focus-visible) .qbud__track { outline: 2px solid rgba(255, 128, 70, .8); outline-offset: 3px; }
 .quote__foot { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: clamp(30px, 3.4vw, 46px); }
 .quote__note { max-width: 28em; font-size: clamp(12px, .9vw, 14px); line-height: 1.35; color: rgba(15, 15, 15, .5); }
 .quote__note.is-error { color: #d22f2f; }
