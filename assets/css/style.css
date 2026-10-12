@@ -2147,76 +2147,74 @@ html:not(.js) .loader { display: none; }
   right: 0;
   bottom: 0;
   height: 1.5px;
-  background: linear-gradient(90deg, #ff6f61, #ff9a4d, #ffc94d);
+  background: linear-gradient(90deg, #ff6f9c, #ff8fb3 45%, #ffb7cf 80%, #ffd3e2);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform .7s var(--ease);
 }
 .qf:hover .qf__line { transform: scaleX(.18); }
 .qf:focus-within .qf__line { transform: scaleX(1); }
-.qf:focus-within .qf__ico { color: #e8643c; transform: scale(1.15); }
+.qf:focus-within .qf__ico { color: #f2668f; transform: scale(1.15); }
 .qf.is-invalid input, .qf.is-invalid textarea { border-bottom-color: #e03a3a; }
 .qf.is-invalid .qf__ico { color: #e03a3a; }
 
-/* Budget : barre en verre dépoli, linéaire (la position correspond au montant), aucun palier suggéré */
-.qbud { --p: 0; --th: 38px; margin: clamp(32px, 3.6vw, 50px) 0 0; }
-.qbud__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
-.qbud__legend { font-size: clamp(15px, 1.1vw, 17px); }
-.qbud__out {
-  font-size: clamp(15px, 1.1vw, 17px);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-  color: rgba(15, 15, 15, .4);
-  transition: color .4s var(--ease);
-}
-.qbud.is-set .qbud__out { font-size: clamp(20px, 1.6vw, 26px); color: var(--ink); letter-spacing: -.01em; }
-/* La barre déborde un peu dans la marge de la carte : plus longue, donc plus précise */
-.qbud__bar { position: relative; height: 48px; margin-inline: calc(clamp(22px, 4vw, 58px) * -1 + 12px); }
+/* Budget : barre fine en verre dépoli, mais grande zone de prise ; linéaire, aucun palier suggéré */
+.qbud { --p: 0; --th: 22px; margin: clamp(32px, 3.6vw, 50px) 0 0; }
+.qbud__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 6px; padding-left: 0; }
+/* Même texte « verre » que les champs du formulaire */
+.qbud__legend, .qbud__out { font-size: clamp(15px, 1.1vw, 17px); color: rgba(15, 15, 15, .42); }
+.qbud__out { font-variant-numeric: tabular-nums; white-space: nowrap; transition: color .4s var(--ease); }
+.qbud.is-set .qbud__out { color: var(--ink); }
+/* La zone de prise reste haute (44 px) : la barre est fine mais facile à attraper */
+.qbud__bar { position: relative; height: 44px; margin-inline: calc(clamp(22px, 4vw, 58px) * -1 + 12px); }
 .qbud__track {
   position: absolute;
-  inset: 0;
-  padding: 4px;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 12px;
+  margin-top: -6px;
   border: 1px solid rgba(255, 255, 255, .85);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, .22));
+  background: linear-gradient(180deg, rgba(255, 255, 255, .55), rgba(255, 255, 255, .22));
   -webkit-backdrop-filter: blur(12px) saturate(1.4);
   backdrop-filter: blur(12px) saturate(1.4);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -8px 16px -10px rgba(120, 50, 20, .18), 0 10px 26px -18px rgba(120, 50, 20, .35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -3px 6px -3px rgba(150, 40, 80, .15), 0 6px 18px -12px rgba(150, 40, 80, .3);
   transition: box-shadow .4s var(--ease);
 }
-.qbud__bar:hover .qbud__track, .qbud.is-drag .qbud__track { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -8px 16px -10px rgba(120, 50, 20, .18), 0 0 0 4px rgba(255, 150, 90, .14), 0 14px 30px -18px rgba(255, 110, 50, .45); }
-/* Remplissage : le dégradé s'étale sur toute la barre et se dévoile à mesure qu'on avance */
+.qbud__bar:hover .qbud__track, .qbud.is-drag .qbud__track { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -3px 6px -3px rgba(150, 40, 80, .15), 0 0 0 4px rgba(255, 140, 180, .14), 0 8px 22px -12px rgba(240, 90, 140, .4); }
+/* Remplissage rose : le dégradé couvre toute la barre et se dévoile en avançant */
 .qbud__fill {
   position: absolute;
-  left: 4px;
-  top: 4px;
-  bottom: 4px;
-  width: calc(var(--th) + (100% - 8px - var(--th)) * var(--p));
+  left: 2px;
+  top: 2px;
+  bottom: 2px;
+  width: calc(var(--th) / 2 + (100% - var(--th)) * var(--p));
   border-radius: 999px;
-  background: linear-gradient(90deg, #ff7a6b, #ff9a5a 30%, #ffb84d 55%, #ffcf6b 75%, #ff8fa3);
+  background: linear-gradient(90deg, #ff6f9c, #ff8fb3 45%, #ffb7cf 80%, #ffd3e2);
   background-size: var(--tw, 600px) 100%;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 6px 16px -8px rgba(255, 110, 50, .6);
   opacity: .35;
   transition: opacity .4s var(--ease);
 }
 .qbud.is-set .qbud__fill { opacity: 1; }
 .qbud__thumb {
   position: absolute;
-  top: 4px;
-  left: calc(4px + (100% - 8px - var(--th)) * var(--p));
+  top: 50%;
+  left: calc((100% - var(--th)) * var(--p));
   width: var(--th);
   height: var(--th);
+  margin-top: calc(var(--th) / -2);
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 255, 255, .86) 60%, rgba(255, 240, 230, .8));
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 4px 12px rgba(120, 50, 20, .22);
+  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 255, 255, .9) 60%, rgba(255, 235, 242, .85));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .95), 0 0 0 1px rgba(240, 110, 150, .25), 0 4px 12px rgba(150, 40, 80, .22);
   transition: transform .35s var(--spring);
 }
-.qbud__bar:hover .qbud__thumb { transform: scale(1.06); }
-.qbud.is-drag .qbud__thumb { transform: scale(1.12); }
+.qbud__bar:hover .qbud__thumb { transform: scale(1.12); }
+.qbud.is-drag .qbud__thumb { transform: scale(1.25); }
 .qbud__tip {
   position: absolute;
   left: 50%;
-  bottom: calc(100% + 14px);
+  bottom: calc(100% + 12px);
   padding: 6px 11px;
   border-radius: 9px;
   background: var(--ui);
@@ -2230,27 +2228,28 @@ html:not(.js) .loader { display: none; }
   pointer-events: none;
 }
 .qbud.is-drag .qbud__tip, .qbud__bar:has(.qbud__range:focus-visible) .qbud__tip { opacity: 1; transform: translate(-50%, 0); }
-/* Curseur natif invisible mais de la même taille : le doigt et la souris tombent juste */
+/* Curseur natif invisible, même largeur que la bille et toute la hauteur de la zone de prise */
 .qbud__range {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 0 4px;
+  padding: 0;
   opacity: 0;
   cursor: grab;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
-  accent-color: #ff8a4d;
+  accent-color: #f2668f;
   -webkit-appearance: none;
   appearance: none;
   background: transparent;
 }
 .qbud__range:active { cursor: grabbing; }
-.qbud__range::-webkit-slider-thumb { -webkit-appearance: none; width: var(--th); height: var(--th); border: 0; }
-.qbud__range::-moz-range-thumb { width: var(--th); height: var(--th); border: 0; }
-.qbud__bar:has(.qbud__range:focus-visible) .qbud__track { outline: 2px solid rgba(255, 128, 70, .8); outline-offset: 3px; }
+.qbud__range::-webkit-slider-runnable-track { height: 44px; }
+.qbud__range::-webkit-slider-thumb { -webkit-appearance: none; width: var(--th); height: 44px; border: 0; }
+.qbud__range::-moz-range-thumb { width: var(--th); height: 44px; border: 0; }
+.qbud__bar:has(.qbud__range:focus-visible) .qbud__track { outline: 2px solid rgba(240, 100, 150, .7); outline-offset: 4px; }
 .quote__foot { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: clamp(30px, 3.4vw, 46px); }
 .quote__note { max-width: 28em; font-size: clamp(12px, .9vw, 14px); line-height: 1.35; color: rgba(15, 15, 15, .5); }
 .quote__note.is-error { color: #d22f2f; }
@@ -2404,7 +2403,7 @@ html:not(.js) .loader { display: none; }
   .gcard { width: 160px; }
   .quote__title { font-size: 12vw; }
   .qf-grid { grid-template-columns: minmax(0, 1fr); }
-  .qbud__head { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .qbud__head { flex-direction: column; align-items: flex-start; gap: 2px; }
   .quote__foot { flex-direction: column-reverse; align-items: stretch; }
   .quote__note { text-align: center; }
   .ftr__cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
