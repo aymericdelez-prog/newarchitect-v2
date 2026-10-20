@@ -974,8 +974,10 @@
     const defaultNote = note.textContent;
     $$('.qf input, .qf textarea', qform).forEach((f) => f.addEventListener('input', () => f.closest('.qf').classList.remove('is-invalid')));
 
-    // Pas de serveur : la demande est préparée dans la messagerie du visiteur
-    qform.addEventListener('submit', (e) => {
+    // La demande part dans le back-office ; si le serveur ne répond pas, elle est préparée dans la messagerie du visiteur
+    const BACKOFFICE = 'https://na-backoffice.vercel.app/api/formulaire';
+    const sendBtn = $('.quote__send', qform);
+    qform.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fields = $$('.qf input, .qf textarea', qform);
       let firstBad = null;
@@ -991,6 +993,33 @@
         return;
       }
       const d = new FormData(qform);
+      if (sendBtn.disabled) return;
+      sendBtn.disabled = true;
+      sendBtn.setAttribute('aria-busy', 'true');
+      note.textContent = 'Envoi en cours…';
+      note.className = 'quote__note';
+      try {
+        const res = await fetch(BACKOFFICE, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+          body: JSON.stringify({
+            nom: d.get('nom'), societe: d.get('societe'), email: d.get('email'), telephone: d.get('telephone'),
+            budget: budgetText, projet: d.get('projet'), site_web: d.get('site_web'),
+          }),
+        });
+        if (!res.ok) throw new Error(res.status);
+        qform.reset();
+        if (bud) { bud.classList.remove('is-set'); bud.style.setProperty('--p', 0); budgetText = ''; $('[data-budget-out]', bud).textContent = 'Glissez pour indiquer'; }
+        note.textContent = 'Merci ! Votre demande est bien envoyée, nous revenons vers vous rapidement.';
+        note.className = 'quote__note is-ok';
+        setTimeout(() => { note.textContent = defaultNote; note.className = 'quote__note'; }, 9000);
+        return;
+      } catch {
+        // Repli : la messagerie du visiteur s'ouvre avec la demande prête
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.removeAttribute('aria-busy');
+      }
       const body = [
         `Nom : ${d.get('nom')}`,
         d.get('societe') ? `Société : ${d.get('societe')}` : '',
@@ -1000,7 +1029,7 @@
         '',
         String(d.get('projet')),
       ].filter((l, i) => l || i === 5).join('\n');
-      const subject = `Demande de devis — ${d.get('nom')}`;
+      const subject = `Demande de devis · ${d.get('nom')}`;
       window.location.href = `mailto:menzarval@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       note.textContent = 'Merci ! Votre messagerie s’ouvre avec votre demande prête à envoyer.';
       note.className = 'quote__note is-ok';
